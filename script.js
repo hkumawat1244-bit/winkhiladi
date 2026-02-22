@@ -510,7 +510,6 @@ function generateNumber() {
         }
     }
     
-    // Add prize to winnings
     if (won && prize > 0) {
         currentUser.winnings += prize;
         currentUser.wins++;
