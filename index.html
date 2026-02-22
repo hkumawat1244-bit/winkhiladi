@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WinKhiladi - Fantasy Sports & Lottery</title>
+    <title>WinKhiladi - Color Game & Fantasy Sports</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -18,9 +19,9 @@
     <div id="loginPage" class="page active">
         <div class="login-container">
             <div class="login-header">
-                <div class="app-logo">🏆</div>
+                <div class="app-logo">🎰</div>
                 <h1>WinKhiladi</h1>
-                <p>India's Best Fantasy & Lottery Platform</p>
+                <p>Color Game & Fantasy Sports</p>
             </div>
             
             <div class="login-tabs">
@@ -85,7 +86,7 @@
         </div>
     </div>
 
-    <!-- Main App (Dashboard) -->
+    <!-- Main App -->
     <div id="mainApp" class="page">
         <!-- Header -->
         <header class="app-header">
@@ -94,7 +95,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="app-title">
-                    <span class="logo">🏆</span>
+                    <span class="logo">🎰</span>
                     <span>WinKhiladi</span>
                 </div>
             </div>
@@ -123,29 +124,25 @@
                 </div>
             </div>
             <nav class="sidebar-menu">
-                <a href="#" onclick="showPage('homePage')" class="menu-item active">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
+                <a href="#" onclick="showPage('colorGamePage')" class="menu-item active">
+                    <i class="fas fa-palette"></i>
+                    <span>Color Game</span>
                 </a>
                 <a href="#" onclick="showPage('lotteryPage')" class="menu-item">
                     <i class="fas fa-ticket-alt"></i>
                     <span>Lottery</span>
                 </a>
-                <a href="#" onclick="showPage('matchesPage')" class="menu-item">
-                    <i class="fas fa-cricket"></i>
-                    <span>Cricket Matches</span>
-                </a>
-                <a href="#" onclick="showPage('contestsPage')" class="menu-item">
-                    <i class="fas fa-trophy"></i>
-                    <span>Contests</span>
-                </a>
-                <a href="#" onclick="showPage('leaderboardPage')" class="menu-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Leaderboard</span>
-                </a>
                 <a href="#" onclick="showPage('walletPage')" class="menu-item">
                     <i class="fas fa-wallet"></i>
                     <span>Wallet</span>
+                </a>
+                <a href="#" onclick="showPage('bankPage')" class="menu-item">
+                    <i class="fas fa-university"></i>
+                    <span>Bank Account</span>
+                </a>
+                <a href="#" onclick="showPage('historyPage')" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
                 </a>
                 <a href="#" onclick="showPage('profilePage')" class="menu-item">
                     <i class="fas fa-user"></i>
@@ -161,87 +158,120 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Home Page -->
-            <div id="homePage" class="content-page active">
-                <div class="banner-slider">
-                    <div class="banner active">
-                        <h2>🏆 Win ₹10 Crore!</h2>
-                        <p>Join Mega Lottery Contest</p>
+            <!-- Color Game Page -->
+            <div id="colorGamePage" class="content-page active">
+                <div class="page-header">
+                    <h2>🎨 Color Game</h2>
+                    <p>Guess the number & color!</p>
+                </div>
+                
+                <div class="game-info-bar">
+                    <div class="info-item">
+                        <span class="label">Balance</span>
+                        <span class="value" id="gameBalance">₹0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Auto in</span>
+                        <span class="value" id="gameTimer">60s</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Period</span>
+                        <span class="value" id="periodNumber">#000000</span>
                     </div>
                 </div>
                 
-                <div class="quick-actions">
-                    <div class="action-card" onclick="showPage('lotteryPage')">
-                        <div class="action-icon">🎰</div>
-                        <span>Play Lottery</span>
+                <div class="color-game-container">
+                    <div class="number-display" id="numberDisplay">
+                        <span id="currentNumber">?</span>
                     </div>
-                    <div class="action-card" onclick="showPage('matchesPage')">
-                        <div class="action-icon">🏏</div>
-                        <span>Cricket</span>
-                    </div>
-                    <div class="action-card" onclick="showPage('contestsPage')">
-                        <div class="action-icon">🏆</div>
-                        <span>Contests</span>
-                    </div>
-                    <div class="action-card" onclick="showPage('walletPage')">
-                        <div class="action-icon">💰</div>
-                        <span>Add Money</span>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <h2>⚡ Live Lottery</h2>
-                    <div class="lottery-card" onclick="showPage('lotteryPage')">
-                        <div class="lottery-info">
-                            <h3>🎰 Daily Jackpot</h3>
-                            <p>Win ₹1,00,00,000</p>
+                    
+                    <div class="color-legend">
+                        <div class="legend-item">
+                            <div class="legend-color green"></div>
+                            <span>0, 5 (9x)</span>
                         </div>
-                        <div class="lottery-timer">
-                            <span id="lotteryCountdown">05:30:45</span>
+                        <div class="legend-item">
+                            <div class="legend-color red"></div>
+                            <span>Even (2x)</span>
                         </div>
-                        <button class="btn-play">Play Now</button>
+                        <div class="legend-item">
+                            <div class="legend-color white"></div>
+                            <span>Odd (2x)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="betting-section">
+                        <h3>Place Your Bet</h3>
+                        
+                        <div class="bet-amount">
+                            <label>Bet Amount:</label>
+                            <div class="amount-buttons">
+                                <button onclick="setBetAmount(10)">₹10</button>
+                                <button onclick="setBetAmount(50)">₹50</button>
+                                <button onclick="setBetAmount(100)">₹100</button>
+                                <button onclick="setBetAmount(500)">₹500</button>
+                                <button onclick="setBetAmount(1000)">₹1000</button>
+                            </div>
+                            <input type="number" id="betAmount" value="10" min="10">
+                        </div>
+                        
+                        <div class="bet-type">
+                            <label>Bet Type:</label>
+                            <div class="bet-buttons">
+                                <button class="bet-btn green" onclick="setBetType('green')">
+                                    🟢 0, 5 (9x)
+                                </button>
+                                <button class="bet-btn red" onclick="setBetType('red')">
+                                    🔴 Even (2x)
+                                </button>
+                                <button class="bet-btn white" onclick="setBetType('white')">
+                                    ⚪ Odd (2x)
+                                </button>
+                            </div>
+                            <p id="selectedBet">Selected: None</p>
+                        </div>
+                        
+                        <button class="btn-primary btn-large" onclick="placeBet()">
+                            🎰 Place Bet
+                        </button>
+                        
+                        <button class="btn-secondary" onclick="generateNumber()">
+                            🎲 Generate Number (Skip Wait)
+                        </button>
+                    </div>
+                    
+                    <div class="game-result" id="gameResult" style="display: none;">
+                        <h3>🎉 Result</h3>
+                        <div class="result-number" id="resultNumber"></div>
+                        <div class="result-color" id="resultColor"></div>
+                        <div class="result-amount" id="resultAmount"></div>
                     </div>
                 </div>
                 
-                <div class="section">
-                    <h2>📅 Upcoming Matches</h2>
-                    <div class="matches-list" id="homeMatchesList"></div>
+                <div class="recent-results">
+                    <h3>📜 Recent Results</h3>
+                    <div class="results-list" id="resultsList"></div>
                 </div>
             </div>
 
             <!-- Lottery Page -->
             <div id="lotteryPage" class="content-page">
                 <div class="page-header">
-                    <h2>🎰 Lottery Games</h2>
+                    <h2>🎰 Lottery (0-9)</h2>
                 </div>
                 
                 <div class="lottery-game">
                     <div class="lottery-header">
-                        <h3>🎰 Win Khiladi Lottery</h3>
-                        <p>Pick 3 numbers and win exciting prizes!</p>
+                        <h3>🎰 Pick 3 Numbers</h3>
+                        <p>Win up to ₹1000!</p>
                     </div>
                     
                     <div class="lottery-numbers">
                         <p>Select 3 Numbers (0-9)</p>
                         <div class="number-selection">
-                            <div class="number-group">
-                                <label>Number 1</label>
-                                <select id="lotteryNum1">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                            <div class="number-group">
-                                <label>Number 2</label>
-                                <select id="lotteryNum2">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                            <div class="number-group">
-                                <label>Number 3</label>
-                                <select id="lotteryNum3">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
+                            <select id="lotteryNum1"></select>
+                            <select id="lotteryNum2"></select>
+                            <select id="lotteryNum3"></select>
                         </div>
                     </div>
                     
@@ -254,45 +284,10 @@
                     
                     <div class="lottery-result" id="lotteryResult" style="display: none;">
                         <h3>🎉 Result</h3>
-                        <div class="winning-numbers" id="winningNumbers"></div>
-                        <div class="result-message" id="resultMessage"></div>
-                        <div class="result-prize" id="resultPrize"></div>
+                        <div class="winning-numbers" id="lotteryWinningNumbers"></div>
+                        <div class="result-message" id="lotteryResultMessage"></div>
                     </div>
                 </div>
-                
-                <div class="lottery-history">
-                    <h3>📜 Recent Results</h3>
-                    <div id="lotteryHistoryList"></div>
-                </div>
-            </div>
-
-            <!-- Matches Page -->
-            <div id="matchesPage" class="content-page">
-                <div class="page-header">
-                    <h2>🏏 Cricket Matches</h2>
-                </div>
-                <div class="matches-container" id="allMatchesList"></div>
-            </div>
-
-            <!-- Contests Page -->
-            <div id="contestsPage" class="content-page">
-                <div class="page-header">
-                    <h2>🏆 Contests</h2>
-                </div>
-                <div class="contests-container" id="allContestsList"></div>
-            </div>
-
-            <!-- Leaderboard Page -->
-            <div id="leaderboardPage" class="content-page">
-                <div class="page-header">
-                    <h2>🏅 Leaderboard</h2>
-                </div>
-                <div class="leaderboard-tabs">
-                    <button class="tab-btn active" onclick="showLeaderboard('daily')">Daily</button>
-                    <button class="tab-btn" onclick="showLeaderboard('weekly')">Weekly</button>
-                    <button class="tab-btn" onclick="showLeaderboard('monthly')">Monthly</button>
-                </div>
-                <div class="leaderboard-container" id="leaderboardList"></div>
             </div>
 
             <!-- Wallet Page -->
@@ -311,7 +306,7 @@
                 
                 <div class="wallet-details">
                     <div class="wallet-item">
-                        <span>Deposit Balance</span>
+                        <span>Deposit</span>
                         <span id="depositBalance">₹0</span>
                     </div>
                     <div class="wallet-item">
@@ -332,11 +327,81 @@
                         <i class="fas fa-download"></i> Withdraw
                     </button>
                 </div>
-                
-                <div class="transaction-history">
-                    <h3>📜 Transactions</h3>
-                    <div id="transactionList"></div>
+            </div>
+
+            <!-- Bank Account Page -->
+            <div id="bankPage" class="content-page">
+                <div class="page-header">
+                    <h2>🏦 Bank Account</h2>
                 </div>
+                
+                <div class="bank-form">
+                    <h3>Add Bank Account</h3>
+                    <p>For withdrawals</p>
+                    
+                    <div class="input-group">
+                        <label>Account Holder Name</label>
+                        <input type="text" id="bankHolderName" placeholder="Enter name as per bank">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Bank Name</label>
+                        <select id="bankName">
+                            <option value="">Select Bank</option>
+                            <option value="SBI">State Bank of India</option>
+                            <option value="HDFC">HDFC Bank</option>
+                            <option value="ICICI">ICICI Bank</option>
+                            <option value="Axis">Axis Bank</option>
+                            <option value="PNB">Punjab National Bank</option>
+                            <option value="BOB">Bank of Baroda</option>
+                            <option value="Canara">Canara Bank</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Account Number</label>
+                        <input type="text" id="bankAccountNumber" placeholder="Enter account number">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Confirm Account Number</label>
+                        <input type="text" id="bankConfirmNumber" placeholder="Re-enter account number">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>IFSC Code</label>
+                        <input type="text" id="bankIFSC" placeholder="e.g., SBIN0001234">
+                    </div>
+                    
+                    <button class="btn-primary" onclick="saveBankAccount()">
+                        💾 Save Bank Account
+                    </button>
+                </div>
+                
+                <div class="saved-bank" id="savedBank" style="display: none;">
+                    <h3>🏦 Saved Bank Account</h3>
+                    <div class="bank-details">
+                        <p><strong>Bank:</strong> <span id="savedBankName"></span></p>
+                        <p><strong>Account:</strong> ****<span id="savedAccountLast"></span></p>
+                        <p><strong>Holder:</strong> <span id="savedHolderName"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Page -->
+            <div id="historyPage" class="content-page">
+                <div class="page-header">
+                    <h2>📜 Game History</h2>
+                </div>
+                
+                <div class="history-tabs">
+                    <button class="tab-btn active" onclick="showHistory('color')">Color Game</button>
+                    <button class="tab-btn" onclick="showHistory('lottery')">Lottery</button>
+                    <button class="tab-btn" onclick="showHistory('transactions')">Transactions</button>
+                </div>
+                
+                <div class="history-list" id="historyList"></div>
             </div>
 
             <!-- Profile Page -->
@@ -355,8 +420,8 @@
                 
                 <div class="profile-stats">
                     <div class="stat-box">
-                        <span class="stat-value" id="totalContests">0</span>
-                        <span class="stat-label">Contests</span>
+                        <span class="stat-value" id="totalGames">0</span>
+                        <span class="stat-label">Games</span>
                     </div>
                     <div class="stat-box">
                         <span class="stat-value" id="totalWins">0</span>
@@ -364,41 +429,3 @@
                     </div>
                     <div class="stat-box">
                         <span class="stat-value" id="totalEarnings">₹0</span>
-                        <span class="stat-label">Earnings</span>
-                    </div>
-                </div>
-                
-                <div class="profile-menu">
-                    <a href="#" onclick="showPage('walletPage')" class="profile-menu-item">
-                        <i class="fas fa-wallet"></i>
-                        <span>My Wallet</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                    <a href="#" class="profile-menu-item">
-                        <i class="fas fa-history"></i>
-                        <span>My Teams</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                    <a href="#" class="profile-menu-item">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                    <a href="#" onclick="logout()" class="profile-menu-item logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-            </div>
-        </main>
-
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a href="#" onclick="showPage('homePage')" class="nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#" onclick="showPage('lotteryPage')" class="nav-item">
-                <i class="fas fa-ticket-alt"></i>
-                <span>Lottery</span>
