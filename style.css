@@ -1,73 +1,713 @@
+/* ==================== BASE STYLES ==================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #6c5ce7;
+    --primary-dark: #5849c4;
+    --secondary: #00cec9;
+    --accent: #fd79a8;
+    --success: #00b894;
+    --warning: #fdcb6e;
+    --danger: #ff7675;
+    --dark: #1a1a2e;
+    --darker: #16213e;
+    --light: #ffffff;
+    --gray: #b2bec3;
+    --gray-dark: #636e72;
 }
 
 body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+    color: var(--light);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==================== LOADING SCREEN ==================== */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-screen p {
+    margin-top: 20px;
+    color: var(--gray);
+}
+
+/* ==================== PAGES ==================== */
+.page {
+    display: none;
     min-height: 100vh;
 }
 
-#app {
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
+.page.active {
+    display: block;
 }
 
-.card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
+/* ==================== LOGIN PAGE ==================== */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.app-logo {
+    font-size: 80px;
     margin-bottom: 20px;
-    animation: fadeIn 0.4s ease;
+    animation: bounce 2s infinite;
 }
 
-button {
-    padding: 12px;
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.login-header h1 {
+    font-size: 36px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: var(--gray);
+}
+
+.login-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    padding: 12px 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--light);
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--light);
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+}
+
+.phone-input {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.phone-input span {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+.phone-input input {
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
     border: none;
     border-radius: 12px;
-    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--light);
+    font-size: 16px;
     font-weight: bold;
-    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+}
+
+.btn-secondary {
     width: 100%;
-}
-
-.primary {
-    background: #00ffae;
-    color: black;
-}
-
-.danger {
-    background: #ff4d4d;
-    color: white;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: none;
-}
-
-.match-card {
-    background: rgba(255,255,255,0.05);
     padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 15px;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.nav {
+.btn-secondary:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.btn-large {
+    padding: 20px;
+    font-size: 18px;
+}
+
+.otp-display {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--secondary);
+    margin: 20px 0;
+    letter-spacing: 10px;
+}
+
+.otp-hint {
+    text-align: center;
+    color: var(--warning);
+    margin-bottom: 20px;
+}
+
+.resend-otp {
+    text-align: center;
+    color: var(--primary);
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.resend-otp:hover {
+    text-decoration: underline;
+}
+
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.login-footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* ==================== HEADER ==================== */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--light);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-btn:hover {
+    background: var(--primary);
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.app-title .logo {
+    font-size: 28px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.wallet-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(0, 206, 201, 0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.wallet-display:hover {
+    background: rgba(0, 206, 201, 0.3);
+}
+
+.wallet-display i {
+    color: var(--secondary);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+}
+
+.user-avatar.large {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: var(--darker);
+    z-index: 2000;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1500;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-details h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.user-details p {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    color: var(--light);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: rgba(108, 92, 231, 0.2);
+    border-left: 4px solid var(--primary);
+}
+
+.menu-item i {
+    width: 24px;
+    font-size: 18px;
+}
+
+.menu-item.logout {
+    margin-top: auto;
+    color: var(--danger);
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    padding-top: 60px;
+    padding-bottom: 70px;
+    min-height: 100vh;
+}
+
+.content-page {
+    display: none;
+    padding: 20px;
+}
+
+.content-page.active {
+    display: block;
+}
+
+/* ==================== BANNER ==================== */
+.banner-slider {
     margin-bottom: 20px;
+}
+
+.banner {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+}
+
+.banner.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.banner h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.banner p {
+    opacity: 0.9;
+}
+
+/* ==================== QUICK ACTIONS ==================== */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.action-card:hover {
+    background: rgba(108, 92, 231, 0.2);
+    transform: translateY(-5px);
+}
+
+.action-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.action-card span {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+/* ==================== SECTION ==================== */
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* ==================== LOTTERY CARD ==================== */
+.lottery-card {
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.3) 0%, rgba(253, 121, 168, 0.3) 100%);
+    padding: 25px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lottery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(108, 92, 231, 0.3);
+}
+
+.lottery-info h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.lottery-info p {
+    color: var(--secondary);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.lottery-timer {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 18px;
+    color: var(--warning);
+}
+
+.btn-play {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--light);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-play:hover {
+    transform: scale(1.05);
+}
+
+/* ==================== MATCHES LIST ==================== */
+.matches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.match-card-small {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.match-card-small:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.match-teams {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.match-team {
+    text-align: center;
+}
+
+.match-team .logo {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.match-team .name {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.match-vs {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.match-details {
+    text-align: right;
+}
+
+.match-details .date {
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.match-details .contests {
+    background: rgba(108, 92, 231, 0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+/* ==================== LOTTERY PAGE ==================== */
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h2 {
+    font-size: 24px;
+}
+
+.lottery-game {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+
+.lottery-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lottery-header h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.lottery-header p {
+    color: var(--gray);
+}
+
+.lottery-numbers {
+    margin-bottom: 25px;
+}
+
+.lottery-numbers > p {
+    text-align: center;
+    margin-bottom: 20px;
+    color
