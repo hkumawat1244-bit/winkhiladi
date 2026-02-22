@@ -562,8 +562,6 @@ function generateNumber() {
     updateResultsList();
 }
     
-    // Add to history
-    addToHistory(winningNumber,
 function addToHistory(number, color, won, prize) {
     var entry = {
         number: number,
