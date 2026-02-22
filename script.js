@@ -1,124 +1,109 @@
-// ===============================
-// Fantasy App Advanced JS
-// ===============================
-
-// Global State
-const AppState = {
+const App = {
     user: null,
     balance: 0,
-    currentPage: "login",
     matches: [
-        { id: 1, team1: "IND", team2: "AUS", prize: 50000 },
-        { id: 2, team1: "ENG", team2: "PAK", prize: 25000 },
-        { id: 3, team1: "SA", team2: "NZ", prize: 15000 }
+        { id: 1, t1: "IND", t2: "AUS", prize: 50000 },
+        { id: 2, t1: "ENG", t2: "PAK", prize: 25000 },
+        { id: 3, t1: "SA", t2: "NZ", prize: 15000 }
     ]
 };
 
-// ===============================
-// INIT
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-    loadUser();
-    renderPage();
-});
+document.addEventListener("DOMContentLoaded", init);
 
-// ===============================
-// USER AUTH
-// ===============================
-function login(username) {
-    AppState.user = username;
-    AppState.balance = 1000;
-    localStorage.setItem("fantasyUser", JSON.stringify(AppState));
-    renderPage("dashboard");
+function init() {
+    const saved = localStorage.getItem("fantasyPro");
+    if (saved) Object.assign(App, JSON.parse(saved));
+    render(App.user ? "dashboard" : "login");
 }
 
-function logout() {
-    localStorage.removeItem("fantasyUser");
-    AppState.user = null;
-    renderPage("login");
+function save() {
+    localStorage.setItem("fantasyPro", JSON.stringify(App));
 }
 
-function loadUser() {
-    const saved = localStorage.getItem("fantasyUser");
-    if (saved) {
-        Object.assign(AppState, JSON.parse(saved));
-        AppState.currentPage = "dashboard";
-    }
-}
-
-// ===============================
-// PAGE RENDERING (SPA)
-// ===============================
-function renderPage(page = AppState.currentPage) {
-    AppState.currentPage = page;
-    const root = document.getElementById("app");
+function render(page) {
+    const app = document.getElementById("app");
 
     if (page === "login") {
-        root.innerHTML = `
-            <div class="login-page">
-                <h2>Login to Fantasy App</h2>
-                <input id="username" placeholder="Enter username" />
-                <button onclick="handleLogin()">Login</button>
+        app.innerHTML = `
+            <div class="card">
+                <h2>FantasyX Pro Login</h2>
+                <input id="username" placeholder="Enter Username">
+                <button class="primary" onclick="login()">Login</button>
             </div>
         `;
     }
 
     if (page === "dashboard") {
-        root.innerHTML = `
-            <div class="dashboard">
-                <h2>Welcome ${AppState.user}</h2>
-                <p>Balance: ₹${AppState.balance}</p>
-                <button onclick="renderPage('matches')">View Matches</button>
-                <button onclick="logout()">Logout</button>
+        app.innerHTML = `
+            <div class="nav">
+                <strong>${App.user}</strong>
+                <button class="danger" onclick="logout()">Logout</button>
+            </div>
+            <div class="card">
+                <h3>Wallet Balance</h3>
+                <h2>₹${App.balance}</h2>
+                <button class="primary" onclick="addMoney()">Add ₹500</button>
+            </div>
+            <div class="card">
+                <button class="primary" onclick="render('matches')">View Matches</button>
+                <button class="primary" onclick="render('leaderboard')">Leaderboard</button>
             </div>
         `;
     }
 
     if (page === "matches") {
-        let matchHTML = "";
-        AppState.matches.forEach(match => {
-            matchHTML += `
+        let html = `<div class="card"><h2>Available Matches</h2>`;
+        App.matches.forEach(m => {
+            html += `
                 <div class="match-card">
-                    <h3>${match.team1} vs ${match.team2}</h3>
-                    <p>Prize Pool: ₹${match.prize}</p>
-                    <button onclick="joinMatch(${match.id})">Join</button>
+                    <strong>${m.t1} vs ${m.t2}</strong>
+                    <p>Prize Pool: ₹${m.prize}</p>
+                    <button class="primary" onclick="joinMatch(${m.id})">Join (₹100)</button>
                 </div>
             `;
         });
+        html += `<button class="danger" onclick="render('dashboard')">Back</button></div>`;
+        app.innerHTML = html;
+    }
 
-        root.innerHTML = `
-            <div class="matches-page">
-                <h2>Available Matches</h2>
-                ${matchHTML}
-                <button onclick="renderPage('dashboard')">Back</button>
+    if (page === "leaderboard") {
+        app.innerHTML = `
+            <div class="card">
+                <h2>Leaderboard</h2>
+                <p>🥇 Player1 - ₹5000</p>
+                <p>🥈 Player2 - ₹3500</p>
+                <p>🥉 Player3 - ₹2000</p>
+                <button class="danger" onclick="render('dashboard')">Back</button>
             </div>
         `;
     }
 }
 
-// ===============================
-// ACTIONS
-// ===============================
-function handleLogin() {
+function login() {
     const username = document.getElementById("username").value;
-    if (!username) return alert("Enter username");
-    login(username);
+    if (!username) return alert("Enter Username");
+    App.user = username;
+    App.balance = 1000;
+    save();
+    render("dashboard");
+}
+
+function logout() {
+    localStorage.removeItem("fantasyPro");
+    App.user = null;
+    render("login");
+}
+
+function addMoney() {
+    App.balance += 500;
+    save();
+    render("dashboard");
 }
 
 function joinMatch(id) {
-    const match = AppState.matches.find(m => m.id === id);
-    if (!match) return;
-
-    if (AppState.balance >= 100) {
-        AppState.balance -= 100;
-        saveState();
-        alert(`Joined ${match.team1} vs ${match.team2}`);
-        renderPage("dashboard");
-    } else {
-        alert("Insufficient Balance");
-    }
-}
-
-function saveState() {
-    localStorage.setItem("fantasyUser", JSON.stringify(AppState));
+    if (App.balance < 100) return alert("Insufficient Balance");
+    App.balance -= 100;
+    save();
+    alert("Match Joined Successfully!");
+    render("dashboard");
 }
