@@ -1,78 +1,92 @@
-var currentUser = null;
-var generatedOTP = "";
-var currentBet = { amount: 10, type: null };
-var timer = 60;
-var interval = null;
+// lottery.js
 
-document.addEventListener("DOMContentLoaded", function(){
-    setTimeout(function(){
-        document.getElementById("loadingScreen").style.display="none";
-    },1000);
-    startTimer();
-});
+// Global variables
+let currentNumber = 1000;
+let countdown = 60;
+let isRunning = false;
 
-function sendOTP(){
-    var mobile = document.getElementById("loginMobile").value;
-    if(mobile.length !== 10){
-        alert("Enter valid mobile");
-        return;
+// फंक्शन जो आज की तारीख YYYYMMDD format में देगा
+function getDatePrefix() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
+}
+
+// फंक्शन जो Random Number generate करेगा (1000 से 10000 तक)
+function generateRandomNumber() {
+    return Math.floor(Math.random() * 9001) + 1000; // 1000 से 10000 तक
+}
+
+// फंक्शन जो स्क्रीन पर नंबर अपडेट करेगा
+function updateLotteryNumber() {
+    const datePrefix = getDatePrefix();
+    const newNumber = generateRandomNumber();
+    const fullNumber = `${datePrefix}${newNumber}`;
+    
+    const displayElement = document.getElementById("lottery-result");
+    const fullDisplayElement = document.getElementById("lottery-full");
+    
+    if (displayElement) {
+        displayElement.innerText = newNumber;
     }
-    generatedOTP = "1234";
-    document.getElementById("otpBox").style.display="block";
-    alert("Demo OTP: 1234");
-}
-
-function verifyOTP(){
-    var otp = document.getElementById("otpInput").value;
-    if(otp !== generatedOTP){
-        alert("Wrong OTP");
-        return;
+    
+    if (fullDisplayElement) {
+        fullDisplayElement.innerText = fullNumber;
     }
-    currentUser = { balance:100 };
-    document.getElementById("loginPage").classList.remove("active");
-    document.getElementById("mainApp").classList.add("active");
+    
+    console.log(`New Lottery Number: ${fullNumber}`);
 }
 
-function logout(){
-    currentUser=null;
-    document.getElementById("mainApp").classList.remove("active");
-    document.getElementById("loginPage").classList.add("active");
-}
-
-function setBetType(type){
-    currentBet.type = type;
-}
-
-function placeBet(){
-    if(!currentBet.type){
-        alert("Select bet type");
-        return;
+// Check if it's 12:00 PM and start the generator
+function checkStartTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    
+    // 12:00 PM (दोपहर) पर शुरू होगा
+    if (hours === 12 && minutes === 0 && seconds === 0) {
+        startLottery();
     }
-    generateNumber();
+    
+    // अगर पहले से चल रहा है तो हर मिनट अपडेट करें
+    if (isRunning && minutes === 0 && seconds === 0) {
+        updateLotteryNumber();
+    }
 }
 
-function generateNumber(){
-    var num = Math.floor(Math.random()*10);
-    var color = "";
-
-    if(num===0 || num===5) color="green";
-    else if(num%2===0) color="red";
-    else color="white";
-
-    document.getElementById("currentNumber").textContent=num;
-    document.getElementById("resultNumber").textContent="Number: "+num;
-    document.getElementById("resultColor").textContent="Color: "+color;
-    document.getElementById("resultAmount").textContent="Result Updated";
-    document.getElementById("gameResult").style.display="block";
+// Lottery शुरू करने का फंक्शन
+function startLottery() {
+    isRunning = true;
+    currentNumber = 1000;
+    updateLotteryNumber();
+    console.log("🎰 Lottery Generator Started at 12:00 PM!");
 }
 
-function startTimer(){
-    interval = setInterval(function(){
-        timer--;
-        document.getElementById("gameTimer").textContent=timer;
-        if(timer<=0){
-            timer=60;
-            generateNumber();
+// हर 1 सेकंड में चेक करें
+setInterval(checkStartTime, 1000);
+
+// पहली बार लोड होने पर चेक करें
+window.onload = function() {
+    const now = new Date();
+    const hours = now.getHours();
+    
+    // अगर 12:00 PM के बाद है तो शुरू करें
+    if (hours >= 12) {
+        startLottery();
+    }
+    
+    // Countdown Timer
+    setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+            countdown = 60;
         }
-    },1000);
-}
+        const countdownElement = document.getElementById("countdown");
+        if (countdownElement) {
+            countdownElement.innerText = countdown;
+        }
+    }, 1000);
+};
