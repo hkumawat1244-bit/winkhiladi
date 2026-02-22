@@ -1,59 +1,59 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinKhiladi</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Lottery Game - Daily Result</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="lottery-container">
+        <div class="header">
+            <h2>🎰 Lottery Result 🎰</h2>
+            <div class="date-display" id="current-date">
+                Loading...
+            </div>
+        </div>
 
-<div id="loadingScreen" class="loading-screen">
-    <div class="loader"></div>
-    <p>Loading...</p>
-</div>
+        <div class="lottery-number-box">
+            <div class="lottery-number" id="lottery-result">
+                ----
+            </div>
+        </div>
 
-<div id="loginPage" class="page active">
-    <div class="login-container">
-        <h2>Login</h2>
-        <input id="loginMobile" placeholder="Mobile Number" maxlength="10">
-        <button onclick="sendOTP()">Send OTP</button>
+        <div class="full-number-box">
+            <div class="full-number" id="lottery-full">
+                YYYYMMDD1000
+            </div>
+        </div>
 
-        <div id="otpBox" style="display:none;">
-            <input id="otpInput" placeholder="Enter OTP">
-            <button onclick="verifyOTP()">Verify</button>
+        <div class="timer-section">
+            <div class="timer-info">
+                ⏰ Next update in: <span id="countdown">--</span> seconds
+            </div>
+            <div class="status waiting" id="status">
+                Waiting for 12:00 PM...
+            </div>
         </div>
     </div>
-</div>
 
-<div id="mainApp" class="page">
-    <div class="main-content">
-        <h2>Color Game</h2>
-
-        <div class="number-display" id="numberDisplay">
-            <span id="currentNumber">0</span>
-        </div>
-
-        <p>Timer: <span id="gameTimer">60</span></p>
-
-        <input id="betAmount" type="number" value="10">
-
-        <button onclick="setBetType('green')">Green</button>
-        <button onclick="setBetType('red')">Red</button>
-        <button onclick="setBetType('white')">White</button>
-
-        <button onclick="placeBet()">Place Bet</button>
-
-        <div id="gameResult" style="display:none;">
-            <p id="resultNumber"></p>
-            <p id="resultColor"></p>
-            <p id="resultAmount"></p>
-        </div>
-
-        <button onclick="logout()">Logout</button>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="lottery.js"></script>
+    <script>
+        // आज की तारीख दिखाने के लिए
+        function updateDateDisplay() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            const dateStr = now.toLocaleDateString('hi-IN', options);
+            document.getElementById("current-date").innerText = dateStr;
+        }
+        
+        updateDateDisplay();
+    </script>
 </body>
 </html>
