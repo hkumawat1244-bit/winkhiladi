@@ -552,7 +552,28 @@ function generateNumber() {
             resultAmount.textContent = 'You lost ₹' + currentBet.amount;
             resultAmount.style.color = '#ff4444';
         }
-    }
+    }   
+    // Add to history
+    addToHistory(winningNumber, color, won, prize);
+
+    // Reset bet
+    currentBet.type = null;
+
+    updateUserUI();
+    updateResultsList();
+}
     
     // Add to history
     addToHistory(winningNumber,
+function addToHistory(number, color, won, prize) {
+    var entry = {
+        number: number,
+        color: color,
+        won: won,
+        prize: prize,
+        date: new Date().toLocaleString()
+    };
+
+    gameHistory.push(entry);
+    localStorage.setItem('winkhiladi_history', JSON.stringify(gameHistory));
+}
