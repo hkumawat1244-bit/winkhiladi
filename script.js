@@ -1,38 +1,36 @@
 <think>
-The user wants:
-1. Complete JavaScript file
-2. Number generator that works every 1 minute
-3. Period number that updates with the number
-4. No errors
+The user is saying the website is loading but not opening properly. This suggests there might be JavaScript errors in the code. Let me check for common issues:
 
-Let me create a complete, error-free JavaScript file with:
-- Color game logic
-- Number generator every 60 seconds
-- Period number tracking
-- Bank account management
-- Wallet with real payment integration
-- All the features they asked for
+1. Missing semicolons
+2. Syntax errors
+3. Missing brackets
+4. Undefined elements
+5. DOM element not found errors
 
-I'll make sure it's complete and works without errors.
-</think># Complete JavaScript File - Error Free
+Let me create a completely error-free version of all files with proper syntax checking.
+</think># Error-Free Complete Files
 
-## 📄 File 3: `script.js`
+## 🔧 Fixed JavaScript - All Errors Removed
+
+---
+
+## 📄 File 3: `script.js` (Fixed)
 
 ```javascript
 // ==================== WINKHILADI - COMPLETE JAVASCRIPT ==================== //
 
 // ==================== CONFIGURATION ==================== //
-const GAME_DURATION = 60; // seconds
+var GAME_DURATION = 60; // seconds
 
 // ==================== APP STATE ==================== //
-let currentUser = null;
-let users = JSON.parse(localStorage.getItem('winkhiladi_users')) || [];
-let transactions = JSON.parse(localStorage.getItem('winkhiladi_transactions')) || [];
-let gameHistory = JSON.parse(localStorage.getItem('winkhiladi_history')) || [];
-let currentBet = { amount: 10, type: null };
-let gameTimer = GAME_DURATION;
-let gameInterval = null;
-let periodNumber = Math.floor(Math.random() * 900000) + 100000;
+var currentUser = null;
+var users = JSON.parse(localStorage.getItem('winkhiladi_users')) || [];
+var transactions = JSON.parse(localStorage.getItem('winkhiladi_transactions')) || [];
+var gameHistory = JSON.parse(localStorage.getItem('winkhiladi_history')) || [];
+var currentBet = { amount: 10, type: null };
+var gameTimer = GAME_DURATION;
+var gameInterval = null;
+var periodNumber = Math.floor(Math.random() * 900000) + 100000;
 
 // ==================== INITIALIZATION ==================== //
 document.addEventListener('DOMContentLoaded', function() {
@@ -41,8 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     // Hide loading screen
-    setTimeout(() => {
-        document.getElementById('loadingScreen').classList.add('hidden');
+    setTimeout(function() {
+        var loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+        }
     }, 1500);
     
     // Populate lottery numbers
@@ -60,30 +61,33 @@ function initializeApp() {
 
 // ==================== AUTH FUNCTIONS ==================== //
 function switchTab(tab) {
-    const loginForm = document.getElementById('loginForm');
-    const otpForm = document.getElementById('otpForm');
-    const registerForm = document.getElementById('registerForm');
-    const tabs = document.querySelectorAll('.login-tabs .tab-btn');
+    var loginForm = document.getElementById('loginForm');
+    var otpForm = document.getElementById('otpForm');
+    var registerForm = document.getElementById('registerForm');
+    var tabs = document.querySelectorAll('.login-tabs .tab-btn');
     
-    tabs.forEach(t => t.classList    
-    if (.remove('active'));
-tab === 'login') {
+    tabs.forEach(function(t) {
+        t.classList.remove('active');
+    });
+    
+    if (tab === 'login') {
         tabs[0].classList.add('active');
-        loginForm.style.display = 'block';
-        otpForm.style.display = 'none';
-        registerForm.style.display = 'none';
+        if (loginForm) loginForm.style.display = 'block';
+        if (otpForm) otpForm.style.display = 'none';
+        if (registerForm) registerForm.style.display = 'none';
     } else {
         tabs[1].classList.add('active');
-        loginForm.style.display = 'none';
-        otpForm.style.display = 'none';
-        registerForm.style.display = 'block';
+        if (loginForm) loginForm.style.display = 'none';
+        if (otpForm) otpForm.style.display = 'none';
+        if (registerForm) registerForm.style.display = 'block';
     }
 }
 
-let generatedOTP = '';
+var generatedOTP = '';
 
 function sendOTP() {
-    const mobile = document.getElementById('loginMobile').value;
+    var mobileInput = document.getElementById('loginMobile');
+    var mobile = mobileInput ? mobileInput.value : '';
     
     if (mobile.length !== 10) {
         alert('Please enter a valid 10-digit mobile number');
@@ -92,30 +96,38 @@ function sendOTP() {
     
     generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
     
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('otpForm').style.display = 'block';
+    var loginForm = document.getElementById('loginForm');
+    var otpForm = document.getElementById('otpForm');
     
-    document.getElementById('otpDisplay').textContent = generatedOTP;
+    if (loginForm) loginForm.style.display = 'none';
+    if (otpForm) otpForm.style.display = 'block';
+    
+    var otpDisplay = document.getElementById('otpDisplay');
+    if (otpDisplay) otpDisplay.textContent = generatedOTP;
     
     alert('OTP sent! Demo OTP: ' + generatedOTP);
 }
 
 function resendOTP() {
     generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-    document.getElementById('otpDisplay').textContent = generatedOTP;
+    var otpDisplay = document.getElementById('otpDisplay');
+    if (otpDisplay) otpDisplay.textContent = generatedOTP;
     alert('New OTP sent! Demo OTP: ' + generatedOTP);
 }
 
 function verifyOTP() {
-    const otp = document.getElementById('otpInput').value;
-    const mobile = document.getElementById('loginMobile').value;
+    var otpInput = document.getElementById('otpInput');
+    var mobileInput = document.getElementById('loginMobile');
+    
+    var otp = otpInput ? otpInput.value : '';
+    var mobile = mobileInput ? mobileInput.value : '';
     
     if (otp !== generatedOTP) {
         alert('Invalid OTP! Please enter: ' + generatedOTP);
         return;
     }
     
-    let user = users.find(u => u.mobile === mobile);
+    var user = users.find(function(u) { return u.mobile === mobile; });
     
     if (!user) {
         user = {
@@ -141,9 +153,13 @@ function verifyOTP() {
 }
 
 function registerUser() {
-    const name = document.getElementById('regName').value;
-    const mobile = document.getElementById('regMobile').value;
-    const email = document.getElementById('regEmail').value;
+    var nameInput = document.getElementById('regName');
+    var mobileInput = document.getElementById('regMobile');
+    var emailInput = document.getElementById('regEmail');
+    
+    var name = nameInput ? nameInput.value : '';
+    var mobile = mobileInput ? mobileInput.value : '';
+    var email = emailInput ? emailInput.value : '';
     
     if (!name || !mobile || !email) {
         alert('Please fill all fields');
@@ -155,12 +171,12 @@ function registerUser() {
         return;
     }
     
-    if (users.find(u => u.mobile === mobile)) {
+    if (users.find(function(u) { return u.mobile === mobile; })) {
         alert('Mobile number already registered!');
         return;
     }
     
-    const newUser = {
+    var newUser = {
         id: Date.now(),
         mobile: mobile,
         name: name,
@@ -185,30 +201,43 @@ function registerUser() {
 }
 
 function loginSuccess() {
-    document.getElementById('loginPage').classList.remove('active');
-    document.getElementById('mainApp').classList.add('active');
+    var loginPage = document.getElementById('loginPage');
+    var mainApp = document.getElementById('mainApp');
+    
+    if (loginPage) loginPage.classList.remove('active');
+    if (mainApp) mainApp.classList.add('active');
     
     updateUserUI();
     showPage('colorGamePage');
     
     // Add welcome bonus transaction
-    if (!transactions.find(t => t.type === 'bonus')) {
+    var hasBonus = transactions.some(function(t) { return t.type === 'bonus'; });
+    if (!hasBonus) {
         addTransaction('bonus', 50, 'Welcome Bonus');
     }
     
-    alert('Welcome to WinKhiladi! 🎉');
+    alert('Welcome to WinKhiladi!');
 }
 
 function logout() {
     currentUser = null;
-    document.getElementById('mainApp').classList.remove('active');
-    document.getElementById('loginPage').classList.add('active');
     
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('otpForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginMobile').value = '';
-    document.getElementById('otpInput').value = '';
+    var loginPage = document.getElementById('loginPage');
+    var mainApp = document.getElementById('mainApp');
+    var loginForm = document.getElementById('loginForm');
+    var otpForm = document.getElementById('otpForm');
+    var registerForm = document.getElementById('registerForm');
+    var loginMobile = document.getElementById('loginMobile');
+    var otpInput = document.getElementById('otpInput');
+    
+    if (mainApp) mainApp.classList.remove('active');
+    if (loginPage) loginPage.classList.add('active');
+    
+    if (loginForm) loginForm.style.display = 'block';
+    if (otpForm) otpForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'none';
+    if (loginMobile) loginMobile.value = '';
+    if (otpInput) otpInput.value = '';
     
     alert('Logged out successfully!');
 }
@@ -216,24 +245,29 @@ function logout() {
 // ==================== NAVIGATION ==================== //
 function showPage(pageId) {
     // Hide all pages
-    document.querySelectorAll('.content-page').forEach(page => {
+    var pages = document.querySelectorAll('.content-page');
+    pages.forEach(function(page) {
         page.classList.remove('active');
     });
     
     // Show selected page
-    const targetPage = document.getElementById(pageId);
+    var targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.add('active');
     }
     
     // Update sidebar
-    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
+    var menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    menuItems.forEach(function(item) {
         item.classList.remove('active');
     });
     
     // Close sidebar
-    document.getElementById('sidebar').classList.remove('active');
-    document.getElementById('sidebarOverlay').classList.remove('active');
+    var sidebar = document.getElementById('sidebar');
+    var sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    if (sidebar) sidebar.classList.remove('active');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
     
     // Load page data
     if (pageId === 'colorGamePage') loadColorGame();
@@ -245,43 +279,67 @@ function showPage(pageId) {
 }
 
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('active');
-    document.getElementById('sidebarOverlay').classList.toggle('active');
+    var sidebar = document.getElementById('sidebar');
+    var sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    if (sidebar) sidebar.classList.toggle('active');
+    if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
 }
 
 // ==================== USER UI ==================== //
 function updateUserUI() {
     if (!currentUser) return;
     
-    const balance = currentUser.deposit + currentUser.winnings + currentUser.bonus;
+    var balance = currentUser.deposit + currentUser.winnings + currentUser.bonus;
     
     // Header
-    document.getElementById('headerBalance').textContent = '₹' + balance;
-    document.getElementById('userInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+    var headerBalance = document.getElementById('headerBalance');
+    var userInitial = document.getElementById('userInitial');
+    
+    if (headerBalance) headerBalance.textContent = '₹' + balance;
+    if (userInitial) userInitial.textContent = currentUser.name.charAt(0).toUpperCase();
     
     // Sidebar
-    document.getElementById('sidebarUserInitial').textContent = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById('sidebarUserName').textContent = currentUser.name;
-    document.getElementById('sidebarUserMobile').textContent = '+91 ' + currentUser.mobile;
+    var sidebarUserInitial = document.getElementById('sidebarUserInitial');
+    var sidebarUserName = document.getElementById('sidebarUserName');
+    var sidebarUserMobile = document.getElementById('sidebarUserMobile');
+    
+    if (sidebarUserInitial) sidebarUserInitial.textContent = currentUser.name.charAt(0).toUpperCase();
+    if (sidebarUserName) sidebarUserName.textContent = currentUser.name;
+    if (sidebarUserMobile) sidebarUserMobile.textContent = '+91 ' + currentUser.mobile;
     
     // Profile
-    document.getElementById('profileUserInitial').textContent = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById('profileUserName').textContent = currentUser.name;
-    document.getElementById('profileUserMobile').textContent = '+91 ' + currentUser.mobile;
+    var profileUserInitial = document.getElementById('profileUserInitial');
+    var profileUserName = document.getElementById('profileUserName');
+    var profileUserMobile = document.getElementById('profileUserMobile');
+    
+    if (profileUserInitial) profileUserInitial.textContent = currentUser.name.charAt(0).toUpperCase();
+    if (profileUserName) profileUserName.textContent = currentUser.name;
+    if (profileUserMobile) profileUserMobile.textContent = '+91 ' + currentUser.mobile;
     
     // Wallet
-    document.getElementById('walletBalance').textContent = balance;
-    document.getElementById('depositBalance').textContent = '₹' + currentUser.deposit;
-    document.getElementById('winningsBalance').textContent = '₹' + currentUser.winnings;
-    document.getElementById('bonusBalance').textContent = '₹' + currentUser.bonus;
+    var walletBalance = document.getElementById('walletBalance');
+    var depositBalance = document.getElementById('depositBalance');
+    var winningsBalance = document.getElementById('winningsBalance');
+    var bonusBalance = document.getElementById('bonusBalance');
+    
+    if (walletBalance) walletBalance.textContent = balance;
+    if (depositBalance) depositBalance.textContent = '₹' + currentUser.deposit;
+    if (winningsBalance) winningsBalance.textContent = '₹' + currentUser.winnings;
+    if (bonusBalance) bonusBalance.textContent = '₹' + currentUser.bonus;
     
     // Profile stats
-    document.getElementById('totalGames').textContent = currentUser.games;
-    document.getElementById('totalWins').textContent = currentUser.wins;
-    document.getElementById('totalEarnings').textContent = '₹' + currentUser.earnings;
+    var totalGames = document.getElementById('totalGames');
+    var totalWins = document.getElementById('totalWins');
+    var totalEarnings = document.getElementById('totalEarnings');
+    
+    if (totalGames) totalGames.textContent = currentUser.games;
+    if (totalWins) totalWins.textContent = currentUser.wins;
+    if (totalEarnings) totalEarnings.textContent = '₹' + currentUser.earnings;
     
     // Game balance
-    document.getElementById('gameBalance').textContent = '₹' + balance;
+    var gameBalance = document.getElementById('gameBalance');
+    if (gameBalance) gameBalance.textContent = '₹' + balance;
 }
 
 function saveUsers() {
@@ -290,7 +348,7 @@ function saveUsers() {
 
 // ==================== TRANSACTIONS ==================== //
 function addTransaction(type, amount, description) {
-    const transaction = {
+    var transaction = {
         id: Date.now(),
         type: type,
         amount: amount,
@@ -309,7 +367,10 @@ function loadColorGame() {
 
 function updatePeriodNumber() {
     periodNumber = Math.floor(Math.random() * 900000) + 100000;
-    document.getElementById('periodNumber').textContent = '#' + periodNumber;
+    var periodNumberEl = document.getElementById('periodNumber');
+    if (periodNumberEl) {
+        periodNumberEl.textContent = '#' + periodNumber;
+    }
 }
 
 function startGameTimer() {
@@ -318,12 +379,11 @@ function startGameTimer() {
     
     if (gameInterval) clearInterval(gameInterval);
     
-    gameInterval = setInterval(() => {
+    gameInterval = setInterval(function() {
         gameTimer--;
         updateTimerDisplay();
         
         if (gameTimer <= 0) {
-            // Auto generate number when timer ends
             generateNumber();
             gameTimer = GAME_DURATION;
             updatePeriodNumber();
@@ -332,7 +392,7 @@ function startGameTimer() {
 }
 
 function updateTimerDisplay() {
-    const timerEl = document.getElementById('gameTimer');
+    var timerEl = document.getElementById('gameTimer');
     if (timerEl) {
         timerEl.textContent = gameTimer + 's';
     }
@@ -340,12 +400,16 @@ function updateTimerDisplay() {
 
 function setBetAmount(amount) {
     currentBet.amount = amount;
-    document.getElementById('betAmount').value = amount;
+    var betAmountInput = document.getElementById('betAmount');
+    if (betAmountInput) {
+        betAmountInput.value = amount;
+    }
     
     // Update button styles
-    document.querySelectorAll('.amount-buttons button').forEach(btn => {
+    var amountButtons = document.querySelectorAll('.amount-buttons button');
+    amountButtons.forEach(function(btn) {
         btn.classList.remove('active');
-        if (btn.textContent.includes(amount)) {
+        if (btn.textContent.includes(String(amount))) {
             btn.classList.add('active');
         }
     });
@@ -355,20 +419,24 @@ function setBetType(type) {
     currentBet.type = type;
     
     // Update button styles
-    document.querySelectorAll('.bet-btn').forEach(btn => {
+    var betButtons = document.querySelectorAll('.bet-btn');
+    betButtons.forEach(function(btn) {
         btn.classList.remove('active');
     });
     
-    const typeLabels = {
-        'green': '🟢 0, 5 (9x)',
-        'red': '🔴 Even (2x)',
-        'white': '⚪ Odd (2x)'
+    var typeLabels = {
+        'green': 'Green (0, 5)',
+        'red': 'Red (Even)',
+        'white': 'White (Odd)'
     };
     
-    document.getElementById('selectedBet').textContent = 'Selected: ' + typeLabels[type];
+    var selectedBet = document.getElementById('selectedBet');
+    if (selectedBet) {
+        selectedBet.textContent = 'Selected: ' + typeLabels[type];
+    }
     
     // Highlight selected button
-    const btn = document.querySelector(`.bet-btn.${type}`);
+    var btn = document.querySelector('.bet-btn.' + type);
     if (btn) btn.classList.add('active');
 }
 
@@ -383,7 +451,7 @@ function placeBet() {
         return;
     }
     
-    const balance = currentUser.deposit + currentUser.winnings + currentUser.bonus;
+    var balance = currentUser.deposit + currentUser.winnings + currentUser.bonus;
     
     if (balance < currentBet.amount) {
         alert('Insufficient balance! Please add money.');
@@ -397,7 +465,7 @@ function placeBet() {
     } else if (currentUser.winnings >= currentBet.amount) {
         currentUser.winnings -= currentBet.amount;
     } else {
-        const remaining = currentBet.amount - currentUser.bonus - currentUser.winnings;
+        var remaining = currentBet.amount - currentUser.bonus - currentUser.winnings;
         currentUser.bonus = 0;
         currentUser.winnings = 0;
         currentUser.deposit -= remaining;
@@ -413,10 +481,10 @@ function placeBet() {
 
 function generateNumber() {
     // Generate random number 0-9
-    const winningNumber = Math.floor(Math.random() * 10);
+    var winningNumber = Math.floor(Math.random() * 10);
     
     // Determine color
-    let color = '';
+    var color = '';
     if (winningNumber === 0 || winningNumber === 5) {
         color = 'green';
     } else if (winningNumber % 2 === 0) {
@@ -426,8 +494,8 @@ function generateNumber() {
     }
     
     // Get current bet
-    let prize = 0;
-    let won = false;
+    var prize = 0;
+    var won = false;
     
     if (currentBet.type) {
         if (currentBet.type === 'green' && (winningNumber === 0 || winningNumber === 5)) {
@@ -451,106 +519,40 @@ function generateNumber() {
     }
     
     // Update display
-    const numberDisplay = document.getElementById('numberDisplay');
-    const currentNumberEl = document.getElementById('currentNumber');
+    var numberDisplay = document.getElementById('numberDisplay');
+    var currentNumberEl = document.getElementById('currentNumber');
     
-    numberDisplay.className = 'number-display ' + color;
-    currentNumberEl.textContent = winningNumber;
+    if (numberDisplay) {
+        numberDisplay.className = 'number-display ' + color;
+    }
+    if (currentNumberEl) {
+        currentNumberEl.textContent = winningNumber;
+    }
     
     // Show result
-    const resultDiv = document.getElementById('gameResult');
+    var resultDiv = document.getElementById('gameResult');
+    var resultNumber = document.getElementById('resultNumber');
+    var resultColor = document.getElementById('resultColor');
+    var resultAmount = document.getElementById('resultAmount');
+    
     if (resultDiv) {
         resultDiv.style.display = 'block';
-        document.getElementById('resultNumber').textContent = winningNumber;
-        document.getElementById('resultColor').textContent = 'Color: ' + color.toUpperCase();
-        document.getElementById('resultAmount').textContent = won ? 'You won ₹' + prize : 'You lost ₹' + currentBet.amount;
-        document.getElementById('resultAmount').style.color = won ? '#00ff00' : '#ff4444';
+    }
+    if (resultNumber) {
+        resultNumber.textContent = winningNumber;
+    }
+    if (resultColor) {
+        resultColor.textContent = 'Color: ' + color.toUpperCase();
+    }
+    if (resultAmount) {
+        if (won) {
+            resultAmount.textContent = 'You won ₹' + prize;
+            resultAmount.style.color = '#00ff00';
+        } else {
+            resultAmount.textContent = 'You lost ₹' + currentBet.amount;
+            resultAmount.style.color = '#ff4444';
+        }
     }
     
     // Add to history
-    addToHistory(winningNumber, color, currentBet.type, currentBet.amount, won ? prize : -currentBet.amount);
-    
-    // Reset bet
-    currentBet.type = null;
-    document.getElementById('selectedBet').textContent = 'Selected: None';
-    document.querySelectorAll('.bet-btn').forEach(btn => btn.classList.remove('active'));
-    
-    updateUserUI();
-    updateResultsList();
-}
-
-function addToHistory(number, color, betType, amount, result) {
-    const historyItem = {
-        id: Date.now(),
-        period: periodNumber,
-        number: number,
-        color: color,
-        betType: betType,
-        amount: amount,
-        result: result,
-        date: new Date().toISOString()
-    };
-    
-    gameHistory.unshift(historyItem);
-    
-    // Keep only last 100
-    if (gameHistory.length > 100) {
-        gameHistory = gameHistory.slice(0, 100);
-    }
-    
-    localStorage.setItem('winkhiladi_history', JSON.stringify(gameHistory));
-}
-
-function updateResultsList() {
-    const list = document.getElementById('resultsList');
-    if (!list) return;
-    
-    const recentGames = gameHistory.slice(0, 20);
-    
-    if (recentGames.length === 0) {
-        list.innerHTML = '<p style="text-align: center; color: #b2bec3;">No results yet</p>';
-        return;
-    }
-    
-    list.innerHTML = recentGames.map(game => {
-        const colorClass = game.color;
-        const resultColor = game.result > 0 ? '#00ff00' : '#ff4444';
-        return `
-            <div class="result-item">
-                <span class="period">#${game.period}</span>
-                <span class="number ${colorClass}">${game.number}</span>
-                <span class="result" style="color: ${resultColor}">${game.result > 0 ? '+₹' + game.result : '₹' + Math.abs(game.result)}</span>
-            </div>
-        `;
-    }).join('');
-}
-
-// ==================== LOTTERY GAME ==================== //
-function populateLotteryNumbers() {
-    const selects = ['lotteryNum1', 'lotteryNum2', 'lotteryNum3'];
-    
-    selects.forEach(id => {
-        const select = document.getElementById(id);
-        if (select) {
-            select.innerHTML = '<option value="">Select</option>';
-            for (let i = 0; i <= 9; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                select.appendChild(option);
-            }
-        }
-    });
-}
-
-function loadLotteryPage() {
-    populateLotteryNumbers();
-}
-
-function playLottery() {
-    if (!currentUser) {
-        alert('Please login first!');
-        return;
-    }
-    
-    const num1 = parseInt(document.getElementById('lotteryNum1
+    addToHistory(winningNumber,
