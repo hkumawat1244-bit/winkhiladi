@@ -1,0 +1,57 @@
+# WinKhiladi - Fantasy Sports Gaming Platform
+
+🏆 **India's Most Trusted Fantasy Sports Platform**
+
+WinKhiladi is a fantasy sports gaming platform where users can create their dream teams, join contests, and win real cash prizes. The platform covers multiple sports including Cricket, Football, Kabaddi, and more.
+
+![WinKhiladi Banner](https://via.placeholder.com/1200x400/6c5ce7/ffffff?text=WinKhiladi+-+Fantasy+Sports)
+
+## ✨ Features
+
+- 🎯 **Create Custom Teams** - Select 11 players from upcoming matches
+- 🏆 **Multiple Contests** - Head-to-head, leagues, and mega contests
+- 💰 **Real Cash Prizes** - Win and withdraw directly to bank
+- 📊 **Live Tracking** - Real-time score updates and leaderboards
+- 👥 **Referral Bonus** - Invite friends and earn bonus cash
+- 📱 **Mobile Friendly** - Works on all devices
+
+## 🎮 How to Play
+
+### Step 1: Create Your Team
+- Select 11 players from the upcoming match
+- Choose your captain and vice-captain
+- Manage your budget wisely (100 credits)
+
+### Step 2: Join Contests
+- Browse available contests
+- Check entry fee and prize pool
+- Join with single click
+
+### Step 3: Track Performance
+- Watch live scores
+- See real-time points updates
+- Check leaderboard rankings
+
+### Step 4: Win Cash
+- Withdraw winnings to bank
+- Get instant transfer
+- Play more contests
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Design:** Modern UI with glassmorphism effects
+- **Icons:** Font Awesome 6
+- **Hosting:** GitHub Pages
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Any modern web browser (Chrome, Firefox, Safari, Edge)
+- Internet connection
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/winkhiladi.git

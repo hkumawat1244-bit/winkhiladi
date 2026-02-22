@@ -1,0 +1,7 @@
+winkhiladi/
+├── index.html          # Main HTML file
+├── style.css           # All styles
+├── script.js           # JavaScript functionality
+├── README.md           # This file
+├── .gitignore          # Git ignore settings
+└── assets/             # Images and icons
