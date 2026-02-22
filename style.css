@@ -1,3 +1,23 @@
+<think>
+The user is asking for the complete CSS file for the color game with payment system. They want to make sure there are no mistakes and everything is real. Let me provide a complete, error-free CSS file that covers all the features:
+
+1. Color game styling
+2. Lottery game styling
+3. Wallet styling
+4. Bank account form styling
+5. History page styling
+6. Profile page styling
+7. Login page styling
+8. Responsive design
+9. Animations and effects
+
+I'll create a comprehensive CSS file that covers all these elements without any errors.
+
+</think># Complete CSS File - Error Free
+
+## 📄 File 2: `style.css`
+
+```css
 /* ==================== BASE STYLES ==================== */
 * {
     margin: 0;
@@ -19,6 +39,9 @@
     --light: #ffffff;
     --gray: #b2bec3;
     --gray-dark: #636e72;
+    --green: #00ff00;
+    --red: #ff4444;
+    --white: #ffffff;
 }
 
 body {
@@ -227,6 +250,7 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    margin-top: 10px;
 }
 
 .btn-secondary:hover {
@@ -478,236 +502,213 @@ body {
     display: block;
 }
 
-/* ==================== BANNER ==================== */
-.banner-slider {
-    margin-bottom: 20px;
-}
-
-.banner {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    display: none;
-}
-
-.banner.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.banner h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-.banner p {
-    opacity: 0.9;
-}
-
-/* ==================== QUICK ACTIONS ==================== */
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.action-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.action-card:hover {
-    background: rgba(108, 92, 231, 0.2);
-    transform: translateY(-5px);
-}
-
-.action-icon {
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
-.action-card span {
-    font-size: 12px;
-    color: var(--gray);
-}
-
-/* ==================== SECTION ==================== */
-.section {
-    margin-bottom: 30px;
-}
-
-.section h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
-}
-
-/* ==================== LOTTERY CARD ==================== */
-.lottery-card {
-    background: linear-gradient(135deg, rgba(108, 92, 231, 0.3) 0%, rgba(253, 121, 168, 0.3) 100%);
-    padding: 25px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.lottery-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(108, 92, 231, 0.3);
-}
-
-.lottery-info h3 {
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-.lottery-info p {
-    color: var(--secondary);
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.lottery-timer {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: monospace;
-    font-size: 18px;
-    color: var(--warning);
-}
-
-.btn-play {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: var(--light);
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-play:hover {
-    transform: scale(1.05);
-}
-
-/* ==================== MATCHES LIST ==================== */
-.matches-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.match-card-small {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.match-card-small:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.match-teams {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.match-team {
-    text-align: center;
-}
-
-.match-team .logo {
-    font-size: 35px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.match-team .name {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.match-vs {
-    font-weight: bold;
-    color: var(--primary);
-}
-
-.match-details {
-    text-align: right;
-}
-
-.match-details .date {
-    color: var(--gray);
-    font-size: 12px;
-}
-
-.match-details .contests {
-    background: rgba(108, 92, 231, 0.2);
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 12px;
-    margin-top: 5px;
-    display: inline-block;
-}
-
-/* ==================== LOTTERY PAGE ==================== */
+/* ==================== PAGE HEADER ==================== */
 .page-header {
     margin-bottom: 25px;
 }
 
 .page-header h2 {
     font-size: 24px;
+    margin-bottom: 5px;
 }
 
-.lottery-game {
+.page-header p {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* ==================== GAME INFO BAR ==================== */
+.game-info-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.game-info-bar .info-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.game-info-bar .label {
+    display: block;
+    color: var(--gray);
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.game-info-bar .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+/* ==================== COLOR GAME ==================== */
+.color-game-container {
     background: rgba(255, 255, 255, 0.05);
     padding: 25px;
     border-radius: 20px;
     margin-bottom: 25px;
 }
 
-.lottery-header {
-    text-align: center;
+.number-display {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 25px;
+    font-size: 80px;
+    font-weight: bold;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.number-display.green {
+    color: var(--green);
+    border-color: var(--green);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+.number-display.red {
+    color: var(--red);
+    border-color: var(--red);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+}
+
+.number-display.white {
+    color: var(--white);
+    border-color: var(--white);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.color-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
     margin-bottom: 25px;
 }
 
-.lottery-header h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.lottery-header p {
+.legend-color {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.legend-color.green {
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+.legend-color.red {
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+}
+
+.legend-color.white {
+    background: var(--white);
+    box-shadow: 0 0 10px var(--white);
+}
+
+/* ==================== BETTING SECTION ==================== */
+.betting-section {
+    margin-top: 25px;
+}
+
+.betting-section h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bet-amount {
+    margin-bottom: 20px;
+}
+
+.bet-amount label {
+    display: block;
+    margin-bottom: 10px;
     color: var(--gray);
 }
 
-.lottery-numbers {
-    margin-bottom: 25px;
+.amount-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
-.lottery-numbers > p {
+.amount-buttons button {
+    flex: 1;
+    min-width: 60px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--light);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.amount-buttons button:hover,
+.amount-buttons button.active {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.bet-amount input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--light);
+    font-size: 18px;
     text-align: center;
+}
+
+.bet-type {
     margin-bottom: 20px;
-    color
+}
+
+.bet-type label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--gray);
+}
+
+.bet-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bet-btn {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--light);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.bet-btn:hover {
+    transform: translateY(-2px);
+}
+
+.bet-btn.green:hover,
+.bet-btn.green.active {
+    border-color: var(--green);
+    background: rgba(0, 255, 0, 0
