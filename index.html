@@ -1,17 +1,133 @@
-<script src="lottery.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lottery Prediction Demo</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #111;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 30px;
+            margin: 20px;
+        }
+        table {
+            margin: auto;
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+        }
+        canvas {
+            background: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lottery Prediction Demo</h2>
+
+<div>
+    <button onclick="setTimer(30)">30 Sec</button>
+    <button onclick="setTimer(60)">1 Min</button>
+    <button onclick="setTimer(180)">3 Min</button>
+    <button onclick="setTimer(300)">5 Min</button>
+</div>
+
+<h3 id="timer">Timer: 0</h3>
+
+<div id="result">Waiting...</div>
+
+<h3>History</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Number</th>
+            <th>Big/Small</th>
+            <th>Color</th>
+        </tr>
+    </thead>
+    <tbody id="history"></tbody>
+</table>
+
+<canvas id="chart" width="500" height="200"></canvas>
+
 <script>
-    function updateDateDisplay() {
-        const now = new Date();
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            weekday: 'long'
-        };
-        const dateStr = now.toLocaleDateString('hi-IN', options);
-        document.getElementById("current-date").innerText = dateStr;
-    }
-    updateDateDisplay();
+let interval;
+let countdown = 0;
+let historyData = [];
+
+function setTimer(seconds) {
+    clearInterval(interval);
+    countdown = seconds;
+    document.getElementById("timer").innerText = "Timer: " + countdown;
+
+    interval = setInterval(() => {
+        countdown--;
+        document.getElementById("timer").innerText = "Timer: " + countdown;
+
+        if (countdown <= 0) {
+            generateResult();
+            countdown = seconds;
+        }
+    }, 1000);
+}
+
+function generateResult() {
+    let number = Math.floor(Math.random() * 10);
+    let size = number <= 4 ? "Small" : "Big";
+    let color = number % 2 === 0 ? "Red" : "Green";
+
+    document.getElementById("result").innerHTML =
+        "Number: " + number + " | " + size + " | " + color;
+
+    let time = new Date().toLocaleTimeString();
+
+    historyData.unshift(number);
+    if (historyData.length > 10) historyData.pop();
+
+    let row = `<tr>
+        <td>${time}</td>
+        <td>${number}</td>
+        <td>${size}</td>
+        <td>${color}</td>
+    </tr>`;
+
+    document.getElementById("history").innerHTML =
+        row + document.getElementById("history").innerHTML;
+
+    drawChart();
+}
+
+function drawChart() {
+    let canvas = document.getElementById("chart");
+    let ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let barWidth = 40;
+    let gap = 10;
+
+    historyData.forEach((num, index) => {
+        let x = index * (barWidth + gap);
+        let y = canvas.height - (num * 15);
+        ctx.fillStyle = num % 2 === 0 ? "red" : "green";
+        ctx.fillRect(x, y, barWidth, num * 15);
+    });
+}
 </script>
+
 </body>
 </html>
