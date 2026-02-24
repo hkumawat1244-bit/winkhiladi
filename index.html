@@ -1,152 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Lottery Advanced Demo</title>
-<style>
-body { font-family: Arial; background:#111; color:white; text-align:center; }
-button { padding:8px 15px; margin:5px; cursor:pointer; }
-input { padding:5px; margin:5px; }
-table { margin:auto; margin-top:15px; border-collapse:collapse; width:80%; }
-th,td { border:1px solid white; padding:6px; }
-.win { color:lightgreen; }
-.lose { color:red; }
-.admin { background:#222; padding:10px; margin-top:20px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Lottery Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Lottery Advanced Demo</h2>
+    <div class="container">
+        <h1>Lottery Game</h1>
 
-<h3>Balance: ₹ <span id="balance">1000</span></h3>
+        <div class="numbers">
+            <button>0</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+        </div>
 
-<h3 id="timer">Timer: 30</h3>
-<h2 id="result">Waiting...</h2>
+        <div class="result">
+            <p>Result: <span id="resultNumber">-</span></p>
+        </div>
 
-<div>
-    <input type="number" id="betAmount" placeholder="Bet Amount">
-    <br>
-    <button onclick="placeBet('Big')">Big</button>
-    <button onclick="placeBet('Small')">Small</button>
-    <button onclick="placeBet('Red')">Red</button>
-    <button onclick="placeBet('Green')">Green</button>
-</div>
+        <button onclick="generateNumber()">Generate</button>
+    </div>
 
-<h3 id="betInfo"></h3>
-
-<h3>History</h3>
-<table>
-<thead>
-<tr>
-<th>Number</th>
-<th>Result</th>
-<th>Color</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody id="history"></tbody>
-</table>
-
-<div class="admin">
-<h3>Admin Panel (Demo)</h3>
-<input type="number" id="adminNumber" placeholder="Fix Number (0-9)">
-<button onclick="setAdminNumber()">Set Fixed Result</button>
-<button onclick="clearAdminNumber()">Auto Random</button>
-<p id="adminStatus"></p>
-</div>
-
-<script>
-let balance = 1000;
-let timer = 30;
-let countdown = timer;
-let currentBet = null;
-let betAmount = 0;
-let adminFixedNumber = null;
-
-function updateBalance() {
-    document.getElementById("balance").innerText = balance;
-}
-
-function placeBet(type) {
-    betAmount = parseInt(document.getElementById("betAmount").value);
-    if (!betAmount || betAmount <= 0) {
-        alert("Enter valid bet amount");
-        return;
-    }
-    if (betAmount > balance) {
-        alert("Insufficient balance");
-        return;
-    }
-    currentBet = type;
-    document.getElementById("betInfo").innerText =
-        "Bet Placed: " + type + " | ₹" + betAmount;
-}
-
-function generateResult() {
-    let number = adminFixedNumber !== null 
-        ? adminFixedNumber 
-        : Math.floor(Math.random() * 10);
-
-    let size = number <= 4 ? "Small" : "Big";
-    let color = number % 2 === 0 ? "Red" : "Green";
-
-    document.getElementById("result").innerText =
-        "Number: " + number + " | " + size + " | " + color;
-
-    let status = "No Bet";
-
-    if (currentBet) {
-        balance -= betAmount;
-
-        if (currentBet === size || currentBet === color) {
-            balance += betAmount * 2;
-            status = "Win";
-        } else {
-            status = "Lose";
-        }
-    }
-
-    updateBalance();
-    addHistory(number, size, color, status);
-
-    currentBet = null;
-    document.getElementById("betInfo").innerText = "";
-}
-
-function addHistory(number, size, color, status) {
-    let row = `<tr>
-        <td>${number}</td>
-        <td>${size}</td>
-        <td>${color}</td>
-        <td class="${status==='Win'?'win':'lose'}">${status}</td>
-    </tr>`;
-    document.getElementById("history").innerHTML =
-        row + document.getElementById("history").innerHTML;
-}
-
-function setAdminNumber() {
-    let num = parseInt(document.getElementById("adminNumber").value);
-    if (num >= 0 && num <= 9) {
-        adminFixedNumber = num;
-        document.getElementById("adminStatus").innerText =
-            "Fixed Result: " + num;
-    }
-}
-
-function clearAdminNumber() {
-    adminFixedNumber = null;
-    document.getElementById("adminStatus").innerText =
-        "Auto Random Enabled";
-}
-
-setInterval(() => {
-    countdown--;
-    document.getElementById("timer").innerText = "Timer: " + countdown;
-    if (countdown <= 0) {
-        generateResult();
-        countdown = timer;
-    }
-}, 1000);
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
