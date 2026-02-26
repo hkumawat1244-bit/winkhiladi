@@ -1,4 +1,6 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
@@ -32,7 +34,9 @@ if ($action === 'stats') {
 }
 
 if ($_POST['action'] === 'add_balance') {
-    $pdo->exec("UPDATE users SET balance = balance + 10000");
+    $pdo->exec("UPDATE users SET balance = balance + 10000"); 
+<html>
+<head>
     echo json_encode(['success' => true]);
 }
 ?>
