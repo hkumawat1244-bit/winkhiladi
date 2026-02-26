@@ -3,33 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Processing</title>
-<link rel="stylesheet" href="style.css">
+<title>System Alert</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: red;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 40vh;
+    font-size: 28px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0.3;}
+    100% {opacity: 1;}
+}
+
+#reveal {
+    display: none;
+    color: white;
+    font-size: 22px;
+    margin-top: 20px;
+}
+</style>
 </head>
 <body>
 
-<div id="overlay">
-    <img src="https://i.imgur.com/8Km9tLL.png" alt="Hacker Image" id="hackerImg">
-    <h1>⏳ System Processing...</h1>
-    <p>Please wait <span id="timer">30</span> seconds</p>
-</div>
+<h1>⚠️ PHONE HACKED ⚠️</h1>
+<div id="reveal">😂 YOUR DATA NOT SAFE 😂</div>
 
-<div class="content">
-    <h2>Welcome to My Website</h2>
-    <button onclick="alert('Button Working!')">Test Button</button>
-</div>
+<script>
+setTimeout(function(){
+    document.getElementById("reveal").style.display = "block";
+}, 5000);
+</script>
 
-<script src="script.js"></script>
-
+<!DOCTYPE html>
 
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>System Processing</title>
 <link rel="stylesheet" href="style.css">
-</head>
-<body>
+
 
 <div id="overlay">
     <img src="https://c4.wallpaperflare.com/wallpaper/792/1011/594/face-anonymous-hackers-hacking-digital-art-guy-fawkes-mask-wallpaper-preview.jpg" alt="Hacker Image" id="hackerImg">
