@@ -3,38 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Update</title>
+<title>System Alert</title>
 
 <style>
 body {
     margin: 0;
     background: black;
+    color: red;
+    font-family: Arial, sans-serif;
+    text-align: center;
     overflow: hidden;
 }
 
-#message {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
+h1 {
+    margin-top: 40vh;
+    font-size: 28px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0.3;}
+    100% {opacity: 1;}
+}
+
+#reveal {
     display: none;
+    color: white;
+    font-size: 22px;
+    margin-top: 20px;
 }
 </style>
 </head>
-
 <body>
 
-<div id="message">😂 Prank Ho Gaya Bhai 😂</div>
+<h1>⚠️ Relax! Yeh Sirf Ek Prank Hai 😜</h1>
+<div id="reveal">😂 Dar Gaye Kya? Phone Safe Hai Bhai 😂</div>
 
 <script>
-// 2 minute black screen
 setTimeout(function(){
-    document.getElementById("message").style.display = "block";
-    document.body.style.background = "black";
-}, 120000); // 120000 ms = 2 minutes
+    document.getElementById("reveal").style.display = "block";
+}, 5000);
 </script>
 
 </body>
