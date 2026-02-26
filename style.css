@@ -1,24 +1,28 @@
 body {
     margin: 0;
-    padding: 0;
     background: black;
+    color: white;
     overflow: hidden;
     font-family: Arial, sans-serif;
 }
 
-#blackScreen {
+#lockScreen {
     position: fixed;
     width: 100%;
     height: 100vh;
     background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
 }
 
-#message {
+#prankMessage {
+    display: none;
     position: fixed;
     bottom: 40px;
     width: 100%;
     text-align: center;
-    color: white;
     font-size: 22px;
-    display: none;
 }
