@@ -1,1 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favico.ico" />
+    <meta name="google" content="notranslate" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <title>lottery</title>
+    
+    <!-- Original scripts -->
+    <script type="module" crossorigin src="/assets/js/index-b3f0e1f0.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/js/common.modules-50bae078.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-turntable-assets-d6267459.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/native/index-12e4728f.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/en-cfd26acf.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-activity-ActivityDetail-f1e083d0.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-activity-Bonus-fa17dd04.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-activity-DailySignIn-9bb566f9.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-activity-FirstRecharge-b99cde46.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-activity-Championship-94e06bd1.js">
+    <link rel="modulepreload" crossorigin href="/assets/js/page-home-other-5ed60b7a.js">
+    
+    <!-- Original CSS -->
+    <link rel="stylesheet" href="/assets/css/common-05d2aa17.css">
+    <link rel="stylesheet" href="/assets/css/page-activity-ActivityDetail-a597c4a3.css">
+    <link rel="stylesheet" href="/assets/css/page-activity-Bonus-608b6579.css">
+    <link rel="stylesheet" href="/assets/css/page-activity-DailySignIn-129a7831.css">
+    <link rel="stylesheet" href="/assets/css/page-activity-FirstRecharge-1994fe55.css">
+    <link rel="stylesheet" href="/assets/css/page-activity-Championship-0dbc2b73.css">
+    <link rel="stylesheet" href="/assets/css/page-home-other-dfeffaf0.css">
+    <link rel="stylesheet" href="/assets/css/index-c3b68787.css">
+    
+    <!-- Navigation Lock CSS -->
+    <style>
+        /* Navigation Lock Overlay */
+        #navigationLockOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999999 !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            backdrop-filter: blur(5px);
+        }
 
+        .timer-container {
+            text-align: center;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(255, 68, 68, 0.4);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        #timer {
+            font-size: 6rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.8);
+            margin-bottom: 15px;
+            animation: pulse 1s infinite;
+        }
+
+        .timer-status {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 10px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .timer-subtext {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Lock page effect */
+        body.navigation-locked::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 68, 68, 0.15);
+            z-index: 999999;
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- Original config -->
+    <script>window.CONFIG=Object.freeze({"VITE_API_URL":"https://api.jalwaapi.com","VITE_BASE_LANGUAGE":"en","VITE_BASE_AREACODE":"","VITE_BASE_DOLLARSIGN":"","VITE_BASE_LANGUAGES":"en","VITE_BASE_PROJECTNAME":"ar077","VITE_BASE_CURRENCY":"","VITE_BASE_UPPERORLOWER":"0","VITE_PNGSTART":"ar077","VITE_HOME":"okwinHome2","VITE_MAINCOLOR":"okwin2Style","VITE_APPNAME":"jalwa","VITE_APPINTRODUCTION":"jalwa","VITE_GTAG_ID":"G-77PJSR8QM8","BASE_URL":"/","MODE":"production","DEV":true,"PROD":false});</script>
+    <script src="/web/config?_key=ar077"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-77PJSR8QM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-77PJSR8QM8');
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Lock Overlay -->
+    <div id="navigationLockOverlay">
+        <div class="timer-container">
+            <div id="timer">30</div>
+            <div class="timer-status">seconds remaining...</div>
+            <div class="timer-subtext">Please wait - Navigation will unlock automatically</div>
+        </div>
+    </div>
+
+    <!-- Navigation Lock Script -->
+    <script>
+        class NavigationLock {
+            constructor(options = {}) {
+                this.timeLeft = options.time || 30;
+                this.timerElement = document.getElementById('timer');
+                this.overlay = document.getElementById('navigationLockOverlay');
+                this.isLocked = false;
+                this.init();
+            }
+
+            init() {
+                this.lockEverything();
+                this.startTimer();
+            }
+
+            lockEverything() {
+                this.isLocked = true;
+                document.body.classList.add('navigation-locked');
+                document.body.style.pointerEvents = 'none !important';
+                this.overlay.style.pointerEvents = 'all';
+                this.overlay.style.display = 'flex';
+
+                // Block ALL events
+                this.blockAllEvents();
+                
+                // Override history API
+                this.blockHistory();
+            }
+
+            unlockEverything() {
+                this.isLocked = false;
+                document.body.classList.remove('navigation-locked');
+                document.body.style.pointerEvents = '';
+                this.overlay.style.display = 'none';
+                this.unblockAllEvents();
+            }
+
+            blockAllEvents() {
+                ['click', 'contextmenu', 'mousedown', 'mouseup', 'keydown', 
+                 'keyup', 'keypress', 'submit', 'touchstart', 'touchmove'].forEach(event => {
+                    document.addEventListener(event, this.blockEvent, true);
+                });
+            }
+
+            unblockAllEvents() {
+                ['click', 'contextmenu', 'mousedown', 'mouseup', 'keydown', 
+                 'keyup', 'keypress', 'submit', 'touchstart', 'touchmove'].forEach(event => {
+                    document.removeEventListener(event, this.blockEvent, true);
+                });
+            }
+
+            blockEvent = (e) => {
+                if (this.isLocked) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return false;
+                }
+            }
+
+            blockHistory() {
+                // Block back/forward buttons
+                const blockHistory = (e) => {
+                    if (this.isLocked) {
+                        e.preventDefault();
+                        return false;
+                    }
+                };
+                
+                window.addEventListener('popstate', blockHistory);
+                history.pushState(null, null, location.href);
+            }
+
+            startTimer() {
+                const interval = setInterval(() => {
+                    this.timeLeft--;
+                    this.timerElement.textContent = this.timeLeft;
+                    document.querySelector('.timer-status').textContent = 
+                        this.timeLeft > 1 ? 'seconds remaining...' : 'Unlocking...';
+
+                    if (this.timeLeft <= 0) {
+                        clearInterval(interval);
+                        this.unlockEverything();
+                    }
+                }, 1000);
+            }
+        }
+
+        // Start lock immediately (before other scripts)
+        window.addEventListener('DOMContentLoaded', () => {
+            new NavigationLock({ time: 30 });
+        });
+        
+        // Also start if DOM already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new NavigationLock({ time: 30 });
+            });
+        } else {
+            new NavigationLock({ time: 30 });
+        }
+    </script>
+</body>
+</html>
