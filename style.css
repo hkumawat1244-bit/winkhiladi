@@ -1,28 +1,71 @@
-body {
-    margin: 0;
-    background: black;
-    color: white;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-}
-
-#lockScreen {
+/* Overlay for timer */
+#navigationLockOverlay {
     position: fixed;
-    width: 100%;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    background: black;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 999999;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#prankMessage {
-    display: none;
-    position: fixed;
-    bottom: 40px;
-    width: 100%;
+/* Timer container */
+.timer-container {
     text-align: center;
-    font-size: 22px;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+}
+
+/* Timer text */
+#timer {
+    font-size: 6rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    margin-bottom: 15px;
+    animation: pulse 1s infinite;
+}
+
+/* Status text */
+.timer-status {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+/* Sub text */
+.timer-subtext {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Page overlay effect */
+body.navigation-locked {
+    position: relative;
+}
+
+body.navigation-locked::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 68, 68, 0.1);
+    z-index: 99999;
+    pointer-events: none;
 }
