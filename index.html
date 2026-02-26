@@ -1,0 +1,38 @@
+<?php session_start();
+if(isset($_SESSION['user_id'])) header('Location: dashboard.php');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎰 Colour Prediction - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <h1>🎯 LOTTERY KING</h1>
+            </div>
+            
+            <div id="phoneForm">
+                <input type="tel" id="phone" placeholder="📱 Enter Mobile" maxlength="10">
+                <button onclick="getOTP()" class="btn-primary">Send OTP</button>
+            </div>
+            
+            <div id="otpForm" style="display:none">
+                <input type="text" id="otp" placeholder="🔐 6 Digit OTP" maxlength="6">
+                <input type="text" id="refCode" placeholder="Referral Code (Optional)">
+                <button onclick="login()" class="btn-primary">Login / Register</button>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div><i class="fas fa-bolt"></i> Instant Withdraw</div>
+            <div><i class="fas fa-clock"></i> 3 Min Rounds</div>
+            <div><i class="fas fa-users"></i> 1000x Payouts</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
