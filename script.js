@@ -1,26 +1,17 @@
-// Disable right click
-document.addEventListener("contextmenu", e => e.preventDefault());
+let timeLeft = 30;
+const timerElement = document.getElementById("timer");
 
-// Disable key navigation
-document.addEventListener("keydown", function(e) {
-    if (
-        e.key === "F5" ||
-        e.key === "F12" ||
-        (e.ctrlKey && e.key === "r") ||
-        (e.ctrlKey && e.key === "u") ||
-        (e.altKey && e.key === "ArrowLeft")
-    ) {
-        e.preventDefault();
+// Disable clicks inside page
+document.body.style.pointerEvents = "none";
+document.getElementById("overlay").style.pointerEvents = "all";
+
+const countdown = setInterval(function() {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+        clearInterval(countdown);
+        document.getElementById("overlay").style.display = "none";
+        document.body.style.pointerEvents = "auto";
     }
-});
-
-// Prevent back button (history push trick)
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1);
-};
-
-// After 2 minutes unlock
-setTimeout(function() {
-    document.getElementById("prankMessage").style.display = "block";
-}, 120000);
+}, 1000);
