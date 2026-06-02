@@ -1,656 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Colour Number Game · 0–9</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@700;900&display=swap" rel="stylesheet"/>
-<style>
-/* ══════════════════════════════════════
-   COLOUR NUMBER GAME — Full App Styles
-   Playful · Vibrant · Mobile-first
-   ══════════════════════════════════════ */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Spider Cursor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+    body { background: #000; min-height: 100vh; overflow: hidden; }
 
-:root {
-  --bg:       #0f0f13;
-  --surface:  #1a1a22;
-  --surface2: #23232e;
-  --border:   rgba(255,255,255,0.08);
-  --text:     #f0f0f0;
-  --muted:    rgba(255,255,255,0.4);
-  --font-d:   'Bebas Neue', cursive;
-  --font-u:   'Nunito', sans-serif;
-  --radius:   18px;
-  --r-sm:     10px;
-}
+    .stars {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .star-dot {
+      position: absolute; background: #fff; border-radius: 50%;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.05; } to { opacity: 0.8; }
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-u);
-  overflow-x: hidden;
-}
-
-/* ── Particle canvas ── */
-#particles {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.45;
-}
-
-/* ── App shell ── */
-.app {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* ── Header ── */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.header-title {
-  font-family: var(--font-d);
-  font-size: 32px;
-  letter-spacing: 3px;
-  line-height: 1;
-}
-.header-title span { opacity: 0.45; font-size: 14px; display: block; letter-spacing: 5px; font-family: var(--font-u); font-weight: 700; margin-bottom: 2px; }
-.streak-badge {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.streak-badge .fire { font-size: 16px; }
-
-/* ── Main ball ── */
-.stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-}
-.ball-outer {
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  padding: 6px;
-  background: conic-gradient(from 0deg, #e53935, #f4511e, #f9a825, #7cb342, #00897b, #1e88e5, #3949ab, #8e24aa, #d81b60, #e53935);
-  animation: spin 8s linear infinite;
-  transition: all 0.4s;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.ball {
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-d);
-  font-size: 100px;
-  line-height: 1;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  transition: background 0.4s;
-}
-.ball::before {
-  content: '';
-  position: absolute;
-  top: 18px; left: 36px;
-  width: 44px; height: 22px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  transform: rotate(-20deg);
-}
-.ball .ball-num { position: relative; z-index: 1; transition: transform 0.1s; }
-.ball .ball-name {
-  position: relative; z-index: 1;
-  font-family: var(--font-u);
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  margin-top: -8px;
-}
-
-.ball.pop .ball-num { animation: numPop 0.4s cubic-bezier(.36,.07,.19,.97); }
-@keyframes numPop {
-  0%   { transform: scale(0.3) rotate(-15deg); opacity: 0; }
-  60%  { transform: scale(1.2) rotate(4deg); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-
-/* ── Timer ── */
-.timer-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-}
-.timer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.timer-label { font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
-.timer-secs { font-family: var(--font-d); font-size: 28px; letter-spacing: 2px; }
-.timer-track {
-  height: 10px;
-  background: var(--surface2);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.timer-fill {
-  height: 100%;
-  border-radius: 99px;
-  transition: width 1s linear, background 0.5s;
-  background: #7cb342;
-}
-
-/* ── Number grid ── */
-.grid-label { font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; text-align: center; }
-.num-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-}
-.num-tile {
-  aspect-ratio: 1;
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  cursor: pointer;
-  font-family: var(--font-d);
-  font-size: 36px;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  border: 2px solid transparent;
-  transition: transform 0.12s, border-color 0.3s;
-  -webkit-tap-highlight-color: transparent;
-}
-.num-tile::before {
-  content: '';
-  position: absolute;
-  top: 8px; left: 12px;
-  width: 20px; height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.22);
-}
-.num-tile .tile-name {
-  font-family: var(--font-u);
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
-}
-.num-tile:hover { transform: scale(1.08); }
-.num-tile:active { transform: scale(0.93); }
-.num-tile.active { border-color: rgba(255,255,255,0.7); }
-.num-tile.active::after {
-  content: '✓';
-  position: absolute;
-  top: 4px; right: 6px;
-  font-family: var(--font-u);
-  font-size: 11px;
-  font-weight: 900;
-}
-
-/* ── Buttons ── */
-.btn-row { display: flex; gap: 10px; }
-.btn {
-  flex: 1;
-  padding: 16px;
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-u);
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.btn:active { transform: scale(0.96); }
-.btn-spin {
-  flex: 2;
-  color: #fff;
-  background: linear-gradient(135deg, #f4511e, #f9a825);
-  font-size: 17px;
-}
-.btn-reset {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-.btn-reset:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
-
-/* ── Stats row ── */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 12px 8px;
-  text-align: center;
-}
-.stat-val { font-family: var(--font-d); font-size: 26px; letter-spacing: 1px; }
-.stat-lbl { font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
-
-/* ── History ── */
-.history-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-}
-.history-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-.history-head-label { font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
-.history-head-count { font-size: 12px; font-weight: 700; color: var(--muted); }
-.history-balls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-.h-ball {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-d);
-  font-size: 20px;
-  color: #fff;
-  position: relative;
-  flex-shrink: 0;
-  animation: popIn 0.3s cubic-bezier(.36,.07,.19,.97);
-}
-@keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.h-ball::before {
-  content: '';
-  position: absolute;
-  top: 5px; left: 9px;
-  width: 10px; height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.25);
-}
-.history-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 8px 0; }
-
-/* ── Footer ── */
-.footer { text-align: center; font-size: 11px; color: var(--muted); letter-spacing: 2px; padding-top: 4px; }
-
-/* ── Ripple ── */
-.ripple {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: rippleOut 0.7s ease-out forwards;
-  z-index: 999;
-}
-@keyframes rippleOut {
-  from { transform: scale(0); opacity: 0.5; }
-  to   { transform: scale(8); opacity: 0; }
-}
-</style>
+    #spiderCanvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 999;
+    }
+  </style>
 </head>
 <body>
+  <div class="stars" id="stars"></div>
+  <canvas id="spiderCanvas"></canvas>
 
-<canvas id="particles"></canvas>
+  <script>
+    // ── Stars ──
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 200; i++) {
+      const s = document.createElement('div');
+      s.className = 'star-dot';
+      const size = Math.random() * 2.5 + 0.3;
+      s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+1).toFixed(1)}s;animation-delay:${(Math.random()*4).toFixed(1)}s;`;
+      starsEl.appendChild(s);
+    }
 
-<div class="app">
+    // ── Canvas ──
+    const canvas = document.getElementById('spiderCanvas');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-title">
-      <span>Colour</span>
-      NUMBER GAME
-    </div>
-    <div class="streak-badge">
-      <span class="fire">🔥</span>
-      <span id="streakNum">0</span> streak
-    </div>
-  </div>
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 
-  <!-- Big Ball -->
-  <div class="stage">
-    <div class="ball-outer" id="ballOuter">
-      <div class="ball" id="mainBall">
-        <span class="ball-num" id="ballNum">?</span>
-        <span class="ball-name" id="ballName">SPIN!</span>
-      </div>
-    </div>
-  </div>
+    // ── Web threads ──
+    const webPoints = [];
+    const MAX_WEB = 60;
 
-  <!-- Timer -->
-  <div class="timer-card">
-    <div class="timer-top">
-      <span class="timer-label">Auto-spin in</span>
-      <span class="timer-secs" id="timerSecs">60</span>
-    </div>
-    <div class="timer-track">
-      <div class="timer-fill" id="timerFill" style="width:100%"></div>
-    </div>
-  </div>
+    // ── Spider class ──
+    class Spider {
+      constructor(lagFactor, sizeMult, color) {
+        this.x = window.innerWidth / 2;
+        this.y = window.innerHeight / 2;
+        this.vx = 0; this.vy = 0;
+        this.lag = lagFactor;
+        this.size = 20 * sizeMult;
+        this.color = color;
+        this.bodyAngle = 0;
+        this.trail = [];
+        this.TRAIL = 40;
+        this.legPhase = 0;
+        // 8 legs, each with 3 segments
+        this.legs = Array.from({length: 8}, (_, i) => ({
+          baseAngle: (i / 8) * Math.PI * 2,
+          phase: Math.random() * Math.PI * 2
+        }));
+      }
 
-  <!-- Number grid -->
-  <div class="grid-label">PICK A NUMBER</div>
-  <div class="num-grid" id="numGrid"></div>
+      update(tx, ty) {
+        const dx = tx - this.x, dy = ty - this.y;
+        this.vx += dx * this.lag;
+        this.vy += dy * this.lag;
+        this.vx *= 0.72; this.vy *= 0.72;
+        this.x += this.vx; this.y += this.vy;
 
-  <!-- Buttons -->
-  <div class="btn-row">
-    <button class="btn btn-spin" onclick="spinNow()">🎲 SPIN NOW</button>
-    <button class="btn btn-reset" onclick="resetGame()">↺ RESET</button>
-  </div>
+        // Rotate body toward movement
+        if (Math.abs(this.vx) > 0.1 || Math.abs(this.vy) > 0.1) {
+          this.bodyAngle = Math.atan2(this.vy, this.vx);
+        }
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat"><div class="stat-val" id="sTot">0</div><div class="stat-lbl">Total</div></div>
-    <div class="stat"><div class="stat-val" id="sLow">—</div><div class="stat-lbl">Lowest</div></div>
-    <div class="stat"><div class="stat-val" id="sHigh">—</div><div class="stat-lbl">Highest</div></div>
-    <div class="stat"><div class="stat-val" id="sAvg">—</div><div class="stat-lbl">Avg</div></div>
-  </div>
+        this.legPhase += 0.18;
+        this.trail.unshift({x: this.x, y: this.y});
+        if (this.trail.length > this.TRAIL) this.trail.pop();
+      }
 
-  <!-- History -->
-  <div class="history-card">
-    <div class="history-head">
-      <span class="history-head-label">Spin History</span>
-      <span class="history-head-count" id="histCount">0 spins</span>
-    </div>
-    <div class="history-balls" id="histBalls">
-      <span class="history-empty">No spins yet — press Spin Now!</span>
-    </div>
-  </div>
+      draw() {
+        const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+        const alpha = 1;
 
-  <div class="footer">0 — 9 · EVERY 60 SECONDS · AUTO GENERATE</div>
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.bodyAngle + Math.PI/2);
 
-</div><!-- /.app -->
+        // ── Draw silk trail ──
+        this.trail.forEach((pt, i) => {
+          const a = (1 - i / this.TRAIL) * 0.25;
+          const r = (1 - i / this.TRAIL) * 3;
+          ctx.save();
+          ctx.resetTransform();
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(255,255,255,${a})`;
+          ctx.fill();
+          ctx.restore();
+        });
 
-<!-- ════════════════════════════════
-     JAVASCRIPT
-     ════════════════════════════════ -->
-<script>
-'use strict';
+        // ── Draw silk thread from center ──
+        if (this.trail.length > 2) {
+          ctx.save();
+          ctx.resetTransform();
+          ctx.beginPath();
+          ctx.moveTo(this.trail[0].x, this.trail[0].y);
+          for (let i = 1; i < Math.min(this.trail.length, 20); i++) {
+            ctx.lineTo(this.trail[i].x, this.trail[i].y);
+          }
+          ctx.strokeStyle = `rgba(200,200,255,0.12)`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
 
-/* ── Colour map ── */
-const COLOURS = [
-  { num:0, name:'Ruby',   hex:'#e53935' },
-  { num:1, name:'Orange', hex:'#f4511e' },
-  { num:2, name:'Amber',  hex:'#f9a825' },
-  { num:3, name:'Lime',   hex:'#7cb342' },
-  { num:4, name:'Teal',   hex:'#00897b' },
-  { num:5, name:'Ocean',  hex:'#1e88e5' },
-  { num:6, name:'Indigo', hex:'#3949ab' },
-  { num:7, name:'Violet', hex:'#8e24aa' },
-  { num:8, name:'Rose',   hex:'#d81b60' },
-  { num:9, name:'Slate',  hex:'#546e7a' },
-];
+        // ── 8 Legs with 3 segments each ──
+        const legCount = 8;
+        for (let i = 0; i < legCount; i++) {
+          const side = i < 4 ? -1 : 1;
+          const legIdx = i < 4 ? i : i - 4;
+          const baseAng = (legIdx / 4) * Math.PI * 0.9 - Math.PI * 0.2;
+          const wiggle = Math.sin(this.legPhase + legIdx * 1.2) * 0.25 * (speed * 0.05 + 1);
 
-/* ── State ── */
-let history   = [];
-let streak    = 0;
-let lastNum   = null;
-let tStart    = performance.now();
-let autoTimer = null;
-let rafId     = null;
-const INTERVAL = 60;
+          const ang1 = side * (baseAng + wiggle);
+          const seg1 = this.size * 0.9;
+          const x1 = Math.cos(ang1) * seg1;
+          const y1 = Math.sin(ang1) * seg1;
 
-/* ── Secure RNG ── */
-function randInt(min, max) {
-  const range = max - min + 1;
-  if (window.crypto && crypto.getRandomValues) {
-    const cap = Math.floor(0x100000000 / range) * range;
-    let r;
-    do { const a = new Uint32Array(1); crypto.getRandomValues(a); r = a[0]; }
-    while (r >= cap);
-    return min + (r % range);
-  }
-  return Math.floor(Math.random() * range) + min;
-}
+          const ang2 = ang1 + side * (0.9 + Math.sin(this.legPhase * 0.7 + legIdx) * 0.3);
+          const seg2 = this.size * 0.85;
+          const x2 = x1 + Math.cos(ang2) * seg2;
+          const y2 = y1 + Math.sin(ang2) * seg2;
 
-/* ── Build grid ── */
-function buildGrid() {
-  const grid = document.getElementById('numGrid');
-  grid.innerHTML = '';
-  COLOURS.forEach(c => {
-    const d = document.createElement('div');
-    d.className = 'num-tile';
-    d.id = 'tile-' + c.num;
-    d.style.background = c.hex;
-    d.innerHTML = `${c.num}<span class="tile-name">${c.name}</span>`;
-    d.addEventListener('click', (e) => {
-      spawnRipple(e, c.hex);
-      pick(c.num);
+          const ang3 = ang2 + side * (0.7 + Math.sin(this.legPhase * 0.5 + legIdx) * 0.2);
+          const seg3 = this.size * 0.6;
+          const x3 = x2 + Math.cos(ang3) * seg3;
+          const y3 = y2 + Math.sin(ang3) * seg3;
+
+          // Leg shadow/glow
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 6;
+          ctx.strokeStyle = this.color;
+          ctx.lineWidth = 1.8;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.lineTo(x3, y3);
+          ctx.stroke();
+
+          // Claw tips
+          ctx.lineWidth = 1;
+          ctx.shadowBlur = 3;
+          const clawAng1 = ang3 + side * 0.5;
+          const clawAng2 = ang3 + side * 0.2;
+          ctx.beginPath();
+          ctx.moveTo(x3, y3);
+          ctx.lineTo(x3 + Math.cos(clawAng1)*this.size*0.25, y3 + Math.sin(clawAng1)*this.size*0.25);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x3, y3);
+          ctx.lineTo(x3 + Math.cos(clawAng2)*this.size*0.2, y3 + Math.sin(clawAng2)*this.size*0.2);
+          ctx.stroke();
+        }
+
+        ctx.shadowBlur = 0;
+
+        // ── Abdomen (big rear body) ──
+        const abdR = this.size * 0.52;
+        const abdY = this.size * 0.55;
+        const grad = ctx.createRadialGradient(0, abdY, 1, 0, abdY, abdR);
+        grad.addColorStop(0, this.color === '#ffffff' ? 'rgba(80,80,90,0.95)' : 'rgba(40,0,60,0.95)');
+        grad.addColorStop(1, 'rgba(10,10,15,0.98)');
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.ellipse(0, abdY, abdR * 0.75, abdR, 0, 0, Math.PI*2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Abdomen pattern
+        ctx.strokeStyle = `rgba(255,255,255,0.12)`;
+        ctx.lineWidth = 0.8;
+        for (let p = 0; p < 3; p++) {
+          ctx.beginPath();
+          ctx.ellipse(0, abdY, (abdR*0.75)*(0.4+p*0.25), abdR*(0.35+p*0.22), 0, 0, Math.PI*2);
+          ctx.stroke();
+        }
+
+        // ── Cephalothorax (front body) ──
+        const headR = this.size * 0.32;
+        const headGrad = ctx.createRadialGradient(-headR*0.2, -headR*0.2, 1, 0, 0, headR);
+        headGrad.addColorStop(0, this.color === '#ffffff' ? 'rgba(120,120,130,0.9)' : 'rgba(80,20,100,0.9)');
+        headGrad.addColorStop(1, 'rgba(20,15,25,0.95)');
+        ctx.beginPath();
+        ctx.ellipse(0, 0, headR*0.85, headR, 0, 0, Math.PI*2);
+        ctx.fillStyle = headGrad;
+        ctx.fill();
+
+        // ── Eyes ──
+        const eyePositions = [
+          [-headR*0.35, -headR*0.35], [headR*0.35, -headR*0.35],
+          [-headR*0.18, -headR*0.55], [headR*0.18, -headR*0.55],
+          [-headR*0.5,  -headR*0.15], [headR*0.5,  -headR*0.15],
+          [-headR*0.28, -headR*0.72], [headR*0.28, -headR*0.72],
+        ];
+        eyePositions.forEach(([ex, ey], ei) => {
+          const eyeSize = ei < 2 ? 2.8 : 1.6;
+          ctx.beginPath();
+          ctx.arc(ex, ey, eyeSize, 0, Math.PI*2);
+          ctx.fillStyle = this.color === '#ffffff' ? 'rgba(180,230,255,0.95)' : 'rgba(200,100,255,0.95)';
+          ctx.fill();
+          // Shine
+          ctx.beginPath();
+          ctx.arc(ex - eyeSize*0.3, ey - eyeSize*0.3, eyeSize*0.35, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(255,255,255,0.9)';
+          ctx.fill();
+        });
+
+        // ── Fangs ──
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 8;
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1.5;
+        [[-headR*0.3, -headR], [headR*0.3, -headR]].forEach(([fx, fy]) => {
+          ctx.beginPath();
+          ctx.moveTo(fx, fy);
+          ctx.quadraticCurveTo(fx * 1.4, fy - headR*0.5, fx * 1.2, fy - headR * 0.9);
+          ctx.stroke();
+        });
+
+        ctx.restore();
+      }
+    }
+
+    // ── Two spiders ──
+    const spider1 = new Spider(0.09, 1.0, '#ffffff');
+    const spider2 = new Spider(0.055, 0.72, 'rgba(180,100,255,0.9)');
+
+    // ── Web drawing on click ──
+    let webNodes = [];
+    document.addEventListener('click', e => {
+      webNodes.push({x: e.clientX, y: e.clientY, t: Date.now()});
+      if (webNodes.length > 12) webNodes.shift();
     });
-    grid.appendChild(d);
-  });
-}
 
-/* ── Pick a number ── */
-function pick(n) {
-  const c = COLOURS[n];
-  const entry = { n, hex: c.hex, name: c.name, t: new Date() };
-  history.unshift(entry);
-  if (history.length > 40) history.pop();
+    function drawWeb() {
+      if (webNodes.length < 2) return;
+      const now = Date.now();
+      webNodes = webNodes.filter(n => now - n.t < 4000);
 
-  // Streak logic
-  if (lastNum !== null && n === lastNum) { streak++; }
-  else { streak = 1; }
-  lastNum = n;
+      for (let i = 0; i < webNodes.length; i++) {
+        for (let j = i+1; j < webNodes.length; j++) {
+          const age1 = (now - webNodes[i].t) / 4000;
+          const age2 = (now - webNodes[j].t) / 4000;
+          const a = (1 - Math.max(age1, age2)) * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(webNodes[i].x, webNodes[i].y);
+          // Curved silk line
+          const mx = (webNodes[i].x + webNodes[j].x)/2;
+          const my = (webNodes[i].y + webNodes[j].y)/2 + 30;
+          ctx.quadraticCurveTo(mx, my, webNodes[j].x, webNodes[j].y);
+          ctx.strokeStyle = `rgba(200,200,255,${a})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
 
-  updateBall(c, n);
-  updateTiles(n);
-  updateStats();
-  updateHistory();
-  updateStreak();
-  resetTimerStart();
-}
+      // Connect spider to nearest web node
+      if (webNodes.length > 0) {
+        const near = webNodes[webNodes.length-1];
+        const age = (now - near.t) / 4000;
+        const a = (1 - age) * 0.25;
+        ctx.beginPath();
+        ctx.moveTo(spider1.x, spider1.y);
+        ctx.lineTo(near.x, near.y);
+        ctx.strokeStyle = `rgba(255,255,255,${a})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    }
 
-/* ── Update big ball ── */
-function updateBall(c, n) {
-  const ball = document.getElementById('mainBall');
-  ball.style.background = c.hex;
-  ball.classList.remove('pop');
-  void ball.offsetWidth;
-  ball.classList.add('pop');
-  document.getElementById('ballNum').textContent = n;
-  document.getElementById('ballName').textContent = c.name;
+    // ── Main loop ──
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Tint outer ring
-  document.getElementById('ballOuter').style.background =
-    `conic-gradient(from 0deg, ${c.hex}, #fff2, ${c.hex})`;
+      spider2.update(mouseX - 55, mouseY - 35);
+      spider1.update(mouseX, mouseY);
 
-  // Update timer fill colour
-  document.getElementById('timerFill').style.background = c.hex;
-}
+      drawWeb();
 
-/* ── Highlight active tile ── */
-function updateTiles(active) {
-  COLOURS.forEach(c => {
-    const t = document.getElementById('tile-' + c.num);
-    t.classList.toggle('active', c.num === active);
-  });
-}
+      spider2.draw();
+      spider1.draw();
 
-/* ── Stats ── */
-function updateStats() {
-  const nums = history.map(e => e.n);
-  document.getElementById('sTot').textContent  = nums.length;
-  document.getElementById('sLow').textContent  = Math.min(...nums);
-  document.getElementById('sHigh').textContent = Math.max(...nums);
-  document.getElementById('sAvg').textContent  =
-    (nums.reduce((a, b) => a + b, 0) / nums.length).toFixed(1);
-}
-
-/* ── History balls ── */
-function updateHistory() {
-  const wrap = document.getElementById('histBalls');
-  document.getElementById('histCount').textContent =
-    history.length + ' spin' + (history.length !== 1 ? 's' : '');
-  if (!history.length) {
-    wrap.innerHTML = '<span class="history-empty">No spins yet — press Spin Now!</span>';
-    return;
-  }
-  wrap.innerHTML = '';
-  history.forEach((e, i) => {
-    const b = document.createElement('div');
-    b.className = 'h-ball';
-    b.style.background = e.hex;
-    b.title = e.name + ' · ' + e.t.toLocaleTimeString();
-    b.textContent = e.n;
-    if (i === 0) b.style.boxShadow = `0 0 0 3px ${e.hex}66`;
-    wrap.appendChild(b);
-  });
-}
-
-/* ── Streak ── */
-function updateStreak() {
-  document.getElementById('streakNum').textContent = streak;
-}
-
-/* ── Timer reset ── */
-function resetTimerStart() { tStart = performance.now(); }
-
-/* ── rAF tick ── */
-function tick() {
-  const elapsed = (performance.now() - tStart) / 1000;
-  const pct     = Math.min(elapsed / INTERVAL, 1);
-  const left    = Math.max(Math.ceil(INTERVAL - elapsed), 0);
-  document.getElementById('timerFill').style.width = ((1 - pct) * 100) + '%';
-  document.getElementById('timerSecs').textContent = left;
-  rafId = requestAnimationFrame(tick);
-}
-
-/* ── Ripple effect ── */
-function spawnRipple(e, colour) {
-  const r = document.createElement('div');
-  r.className = 'ripple';
-  const sz = 60;
-  r.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - sz/2}px;top:${e.clientY - sz/2}px;background:${colour};`;
-  document.body.appendChild(r);
-  r.addEventListener('animationend', () => r.remove());
-}
-
-/* ── Public: spin now ── */
-function spinNow() { pick(randInt(0, 9)); }
-
-/* ── Public: reset ── */
-function resetGame() {
-  clearInterval(autoTimer);
-  cancelAnimationFrame(rafId);
-  history = []; streak = 0; lastNum = null;
-
-  const ball = document.getElementById('mainBall');
-  ball.style.background = 'var(--bg)';
-  document.getElementById('ballNum').textContent  = '?';
-  document.getElementById('ballName').textContent = 'SPIN!';
-  document.getElementById('ballOuter').style.background =
-    'conic-gradient(from 0deg, #e53935, #f4511e, #f9a825, #7cb342, #00897b, #1e88e5, #3949ab, #8e24aa, #d81b60, #e53935)';
-  document.getElementById('timerFill').style.background = '#7cb342';
-  document.getElementById('timerFill').style.width = '100%';
-  document.getElementById('timerSecs').textContent = '60';
-  document.getElementById('sTot').textContent  = '0';
-  document.getElementById('sLow').textContent  = '—';
-  document.getElementById('sHigh').textContent = '—';
-  document.getElementById('sAvg').textContent  = '—';
-  document.getElementById('streakNum').textContent = '0';
-  document.getElementById('histBalls').innerHTML =
-    '<span class="history-empty">No spins yet — press Spin Now!</span>';
-  document.getElementById('histCount').textContent = '0 spins';
-
-  COLOURS.forEach(c => document.getElementById('tile-' + c.num).classList.remove('active'));
-
-  tStart = performance.now();
-  autoTimer = setInterval(spinNow, INTERVAL * 1000);
-  rafId = requestAnimationFrame(tick);
-}
-
-/* ════════════════════════════════
-   PARTICLE BACKGROUND
-   ════════════════════════════════ */
-(function () {
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  const hexes = COLOURS.map(c => c.hex);
-  let W, H, dots = [];
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    dots = Array.from({ length: 55 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: 2 + Math.random() * 4,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      col: hexes[Math.floor(Math.random() * hexes.length)],
-      a: 0.2 + Math.random() * 0.5,
-    }));
-  }
-
-  function drawFrame() {
-    ctx.clearRect(0, 0, W, H);
-    dots.forEach(d => {
-      d.x += d.vx; d.y += d.vy;
-      if (d.x < -10) d.x = W + 10;
-      if (d.x > W + 10) d.x = -10;
-      if (d.y < -10) d.y = H + 10;
-      if (d.y > H + 10) d.y = -10;
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-      ctx.fillStyle = d.col + Math.round(d.a * 255).toString(16).padStart(2, '0');
-      ctx.fill();
-    });
-    requestAnimationFrame(drawFrame);
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  drawFrame();
-})();
-
-/* ── Init ── */
-buildGrid();
-autoTimer = setInterval(spinNow, INTERVAL * 1000);
-rafId = requestAnimationFrame(tick);
-</script>
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
