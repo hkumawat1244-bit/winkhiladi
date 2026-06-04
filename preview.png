@@ -1,0 +1,42 @@
+bash
+
+python3 << 'EOF'
+import base64, shutil
+
+# Copy screenshot as preview.png
+shutil.copy('/mnt/user-data/uploads/Screenshot_2026-06-04_7_09_50_AM.png', '/mnt/user-data/outputs/preview.png')
+
+# Use this as the "I knew it" result image
+with open('/mnt/user-data/uploads/Screenshot_2026-06-04_7_09_50_AM.png', 'rb') as f:
+    img2_data = base64.b64encode(f.read()).decode()
+
+# Keep question image as before
+with open('/mnt/user-data/uploads/1000043543.jpg', 'rb') as f:
+    img1_data = base64.b64encode(f.read()).decode()
+
+img1_src = f"data:image/jpeg;base64,{img1_data}"
+img2_src = f"data:image/png;base64,{img2_data}"
+
+# Read current HTML and replace result image
+with open('/mnt/user-data/outputs/index.html', 'r') as f:
+    html = f.read()
+
+# Find and replace the result sticker src
+import re
+# Replace second sticker (result screen)
+html = re.sub(
+    r'(<div class="screen" id="result-screen">.*?<img class="sticker" src=")data:image[^"]+(")',
+    lambda m: m.group(1) + img2_src + m.group(2),
+    html,
+    flags=re.DOTALL
+)
+
+with open('/mnt/user-data/outputs/index.html', 'w') as f:
+    f.write(html)
+
+print("Done! Result image updated.")
+EOF
+Output
+
+Done! Result image updated.
+Done
