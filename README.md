@@ -38,7 +38,7 @@ Ek cute romantic web page jisme ek teddy bear puchta hai — **"Do you love me?"
 
 Live URL milega:
 ```
-https://your-username.github.io/repo-name/
+ https://hkumawat1244-bit.github.io/peshwa06/
 ```
 
 ---
